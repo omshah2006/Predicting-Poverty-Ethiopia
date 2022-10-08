@@ -10,8 +10,9 @@ import sklearn.linear_model as linear_model
 import matplotlib.pyplot as plt
 import sklearn.metrics as metrics
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import PolynomialFeatures
 
-def run_randomized_cv(X, y, k=5, k_inner=5, random_seed=7, points=10,
+def run_randomized_cv(X, y, k=10, k_inner=5, random_seed=7, points=10,
         alpha_low=1, alpha_high=5, to_print=False):
     """
     Run randomized CV on given X and y
@@ -38,6 +39,7 @@ def scale_features(X_train, X_test):
     Scales features using StandardScaler.
     """
     X_scaler = StandardScaler(with_mean=True, with_std=False)
+#     X_scaler = PolynomialFeatures(degree=2,include_bias=False)
     X_train = X_scaler.fit_transform(X_train)
     X_test = X_scaler.transform(X_test)
     return X_train, X_test
@@ -47,7 +49,9 @@ def train_and_predict_ridge(alpha, X_train, y_train, X_test):
     """
     Trains ridge model and predicts test set.
     """
+    
     ridge = linear_model.Ridge(alpha)
+
     ridge.fit(X_train, y_train)
     y_hat = ridge.predict(X_test)
     return y_hat
