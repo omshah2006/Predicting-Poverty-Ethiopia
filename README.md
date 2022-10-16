@@ -72,7 +72,7 @@ This section is meant to explain at a high level the procedure that the paper fo
 
 1. Download LSMS data. This data tells us a lot of low-level information about developing countries. This includes consumption, which is the variable we try to predict. Consumption is the dollars spent on food per day. $1.90 is the global poverty line.
 2. Download temperature data. This data is available at WorldClim.
-3. Generate cluster aggregates for information. A cluster is defined as a 10km x 10km region enclosing a given central lat/long (which itself comes from the LSMS data). This means we aggregate values like consumption and nightlights across various lat/longs in a cluster.
+3. Generate cluster aggregates for information. A cluster is defined as a 10km x 10km region enclosing a given central lat/long (which itself comes from the LSMS data). This means we aggregate values like consumption and avg temperature across various lat/longs in a cluster.
 4. Transfer learn train VGG on the images to predict the nightlight bins.
 5. Compute the 4096 size feature vector (right before it is condensed into classification) for each image. Average these across a cluster.
 6. Assemble a dataset of clusters where you try to predict consumption (rather log consumption) from the aggregate feature vector per cluster. Use Ridge Regression.
