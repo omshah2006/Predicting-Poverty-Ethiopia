@@ -1,5 +1,5 @@
 # predicting-poverty-ethiopia
------ This code is a fork of the work done by Jatin Mathur to pythonify the poverty prediction paper by Jean et. al. I have adapted it to examine the temperature wealth relationship -----
+----- Orignal_work branch contains PNAS Nexus code. This code is a fork of the work done by Jatin Mathur to pythonify the poverty prediction paper by Jean et. al. I have adapted it to examine the temperature wealth relationship.-----
 
 The purpose of the paper was to use abundant sources of data (namely satellite imagery and nightlights data) to predict poverty levels at a local level (on the order of a single village). For some background, every few years the World Bank conducts surveys in developing countries to understand their living situations. As you might expect, this process is very time-consuming. If we can make a model that only uses abundant sources of data to predict values that otherwise have to be measured through expensive human efforts, then several possibilities arise:
 1) prediction during "off-years" (when no surveys are collected)
