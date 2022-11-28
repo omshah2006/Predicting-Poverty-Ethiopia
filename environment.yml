@@ -1,0 +1,13 @@
+name: pypov38
+channels:
+    - conda-forge
+    - defaults
+    - apple
+dependencies:
+    - python=3.8
+    - jupyterlab
+    - numpy
+    - pandas
+    - earthengine-api
+    - matplotlib
+    - tqdm
