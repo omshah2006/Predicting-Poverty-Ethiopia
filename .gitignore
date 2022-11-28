@@ -1,5 +1,6 @@
 # mine
 *.csv
+*.tif
 *.dta
 *.npy
 *.txt
@@ -8,8 +9,11 @@
 *.caffemodel
 *.DS_Store
 
-data/*
-countries/*
+data/cnn_images*
+data/lsms_tfrecords*
+data/lsms_tfrecords_raw*
+data/countries/ethiopia_2015*
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

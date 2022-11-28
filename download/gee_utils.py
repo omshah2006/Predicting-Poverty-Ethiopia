@@ -5,13 +5,14 @@ import pandas as pd
 def create_fc(df):
     features = []
     for i in range(len(df)):
+        properties = df.iloc[i].to_dict()
         # lon, lat
         point = ee.Geometry.Point([
             df.iloc[i]['lon'],
             df.iloc[i]['lat'],
         ])
 
-        feature = ee.Feature(point)
+        feature = ee.Feature(point, properties)
         features.append(feature)
 
     return ee.FeatureCollection(features)
@@ -98,7 +99,7 @@ def add_nl_band(img):
 
 
 def add_latlon_band(img):
-    latlon_img = ee.Image.pixelLonLat().select(['longitude', 'latitude'], ['lon', 'lat'])
+    latlon_img = ee.Image.pixelLonLat().select(['longitude', 'latitude'], ['LON', 'LAT'])
     img = img.addBands(latlon_img)
 
     return img

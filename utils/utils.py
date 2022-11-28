@@ -4,6 +4,7 @@ Handful of utility functions used throughout the repo
 
 import math
 import pandas as pd
+import zipfile
 
 def merge_on_lat_lon(df1, df2, keys=['cluster_lat', 'cluster_lon'], how='inner'):
     """
@@ -29,4 +30,5 @@ def create_space(lat, lon, s=10):
     """Creates a s km x s km square centered on (lat, lon)"""
     v = (180/math.pi)*(500/6378137)*s # roughly 0.045 for s=10
     return lat - v, lon - v, lat + v, lon + v
+    
     
