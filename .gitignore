@@ -1,4 +1,5 @@
 # mine
+*.idea
 *.tif
 *.dta
 *.npy
