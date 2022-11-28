@@ -1,9 +1,7 @@
 # mine
-*.csv
 *.tif
 *.dta
 *.npy
-*.txt
 *.pt
 *.pth
 *.caffemodel

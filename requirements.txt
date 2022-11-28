@@ -1,0 +1,6 @@
+python=
+numpy
+pandas
+earthengine-api
+matplotlib
+tqdm
