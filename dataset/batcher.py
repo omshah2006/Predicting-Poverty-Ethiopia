@@ -22,8 +22,8 @@ def get_tfrecord_paths(split, bucket=True):
         tfrecords = tf.io.gfile.glob(glob)
     else:
         tfrecords = sorted([f for f in os.listdir(LSMS_TFRECORDS_DIR) if not f.startswith('.')])
-    for i, file in enumerate(tfrecords):
-        tfrecords[i] = os.path.join('data/lsms_tfrecords', file)
+        for i, file in enumerate(tfrecords):
+            tfrecords[i] = os.path.join('data/lsms_tfrecords', file)
 
     tfrecord_paths = []
     if split == 'all':
