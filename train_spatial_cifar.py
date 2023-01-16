@@ -5,28 +5,16 @@ import time
 import matplotlib.pyplot as plt
 from dataset import batcher
 
-# cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
-# tf.config.experimental_connect_to_cluster(cluster_resolver)
-# tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
-# strategy = tf.distribute.TPUStrategy(cluster_resolver)
+cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
+tf.config.experimental_connect_to_cluster(cluster_resolver)
+tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
+strategy = tf.distribute.TPUStrategy(cluster_resolver)
 
 
 lr = 0.0001
 batch_size = 128
 EPOCHS = 50
 
-
-# for layer in model.layers:
-#     layer.trainable = False
-#
-# x = tf.keras.layers.Flatten(name="flatten")(model.layers[-1].output)
-# x = tf.keras.layers.Dense(4096, activation="relu", name="fc1")(x)
-# x = tf.keras.layers.Dense(4096, activation="relu", name="fc2")(x)
-# x = tf.keras.layers.Dense(1000, activation="relu", name="fc3")(x)
-#
-# x = tf.keras.layers.Dense(1, activation="linear", name="predictions")(x)
-#
-# vgg_model = tf.keras.models.Model(inputs=model.inputs, outputs=x)
 
 def model_train(train_features, train_labels, val_features, val_labels):
     # training definition
@@ -42,22 +30,24 @@ def model_train(train_features, train_labels, val_features, val_labels):
     # datagen.fit(train_feature)
 
     # train
-    # with strategy.scope():
+    with strategy.scope():
         # Build your model here
-    vgg_model = vgg16.VGG16(
-        include_top=False,
-        weights="imagenet",
-        input_shape=(224, 224, 3),
-        pooling="max",
-        classes=10,
-        custom_top_classes=10,
-        classifier_activation="softmax",
-    )
+        vgg_model = vgg16.VGG16(
+            include_top=False,
+            weights="imagenet",
+            input_shape=(224, 224, 3),
+            pooling="max",
+            classes=10,
+            custom_top_classes=10,
+            classifier_activation="softmax",
+        )
 
-    model = vgg_model
-    print(model.summary())
+        model = vgg_model
+        print(model.summary())
 
-    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
+        model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
+
+    tf.profiler.experimental.server.start(6000)
 
     history = model.fit(
         x=train_features,

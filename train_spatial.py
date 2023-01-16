@@ -46,6 +46,8 @@ def model_train(training, validation):
 
         model.compile(loss='MeanSquaredError', optimizer="SGD", metrics=['RootMeanSquaredError'])
 
+    tf.profiler.experimental.server.start(6000)
+
     history = model.fit(
         x=training,
         steps_per_epoch=int(4559 / batch_num),

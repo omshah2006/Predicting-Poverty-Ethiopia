@@ -6,3 +6,6 @@ gcloud compute tpus tpu-vm create ppt-c2 \
 
 Connecting to a TPU VM instance:
 gcloud compute tpus tpu-vm ssh ppt-c --zone us-central1-f
+
+gcloud compute tpus execution-groups ssh ppt-c2 --zone=us-central1-f --ssh-flag="-4 -L 9001:localhost:9001"
+
