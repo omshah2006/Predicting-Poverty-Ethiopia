@@ -6,6 +6,15 @@ import matplotlib.pyplot as plt
 from dataset import batcher
 
 
+resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='ppt-c')
+tf.config.experimental_connect_to_cluster(resolver)
+# TPU initialization
+tf.tpu.experimental.initialize_tpu_system(resolver)
+print("All devices: ", tf.config.list_logical_devices('TPU'))
+
+strategy = tf.distribute.TPUStrategy(resolver)
+
+
 lr = 0.0001
 batch_size = 128
 EPOCHS = 50
@@ -50,9 +59,12 @@ def model_train(training, validation):
     # datagen.fit(train_feature)
 
     # train
-    model.compile(loss='MeanSquaredError', optimizer="SGD", metrics=['RootMeanSquaredError'])
+    with strategy.scope():
+        model.compile(loss='MeanSquaredError', optimizer="SGD", metrics=['RootMeanSquaredError'])
+
     history = model.fit(
         x=training,
+        steps_per_execution=70,
         steps_per_epoch=int(4559 / batch_num),
         epochs=epoch_num,
         validation_data=validation,
