@@ -44,6 +44,8 @@ def model_train(training, validation):
     # )
     # datagen.fit(train_feature)
 
+    tf.profiler.experimental.server.start(6000)
+
     # train
     with strategy.scope():
         # Build your model here

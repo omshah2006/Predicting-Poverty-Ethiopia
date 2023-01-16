@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 from dataset import batcher
 
 print("this is before the resolver code")
-cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
-tf.config.experimental_connect_to_cluster(cluster_resolver)
-tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
-strategy = tf.distribute.TPUStrategy(cluster_resolver)
+# cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
+# tf.config.experimental_connect_to_cluster(cluster_resolver)
+# tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
+# strategy = tf.distribute.TPUStrategy(cluster_resolver)
 
 print("this is after the resolver code")
 
@@ -44,22 +44,22 @@ def model_train(train_features, train_labels, val_features, val_labels):
     # datagen.fit(train_feature)
 
     # train
-    with strategy.scope():
+    # with strategy.scope():
         # Build your model here
-        vgg_model = vgg16.VGG16(
-            include_top=False,
-            weights="imagenet",
-            input_shape=(224, 224, 3),
-            pooling="max",
-            classes=10,
-            custom_top_classes=10,
-            classifier_activation="softmax",
-        )
+    vgg_model = vgg16.VGG16(
+        include_top=False,
+        weights="imagenet",
+        input_shape=(224, 224, 3),
+        pooling="max",
+        classes=10,
+        custom_top_classes=10,
+        classifier_activation="softmax",
+    )
 
-        model = vgg_model
-        print(model.summary())
+    model = vgg_model
+    print(model.summary())
 
-        model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     history = model.fit(
         x=train_features,

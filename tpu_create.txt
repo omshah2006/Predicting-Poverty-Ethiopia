@@ -5,4 +5,4 @@ gcloud compute tpus tpu-vm create ppt-c2 \
   --version=tpu-vm-tf-2.11.0 \
 
 Connecting to a TPU VM instance:
-gcloud compute tpus tpu-vm ssh ppt-c2 --zone us-central1-f
+gcloud compute tpus tpu-vm ssh ppt-c --zone us-central1-f

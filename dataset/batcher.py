@@ -41,7 +41,7 @@ def get_tfrecord_paths(split, bucket=True):
 
 class Batcher():
     def __init__(self, shuffle, num_records=None, batch_size=64, split='all'):
-        self.tfrecords_paths = get_tfrecord_paths(split=split)
+        # self.tfrecords_paths = get_tfrecord_paths(split=split)
         self.num_records = num_records
         self.bands = ['BLUE', 'GREEN', 'RED']
         self.scalar_keys = ['lat', 'lon', 'consumption']
