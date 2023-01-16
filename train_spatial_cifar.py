@@ -5,13 +5,11 @@ import time
 import matplotlib.pyplot as plt
 from dataset import batcher
 
-print("this is before the resolver code")
 # cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
 # tf.config.experimental_connect_to_cluster(cluster_resolver)
 # tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
 # strategy = tf.distribute.TPUStrategy(cluster_resolver)
 
-print("this is after the resolver code")
 
 lr = 0.0001
 batch_size = 128

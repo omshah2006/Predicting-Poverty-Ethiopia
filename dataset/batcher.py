@@ -3,6 +3,8 @@ import tensorflow as tf
 import numpy as np
 import random
 
+from tensorflow.python.data import AUTOTUNE
+
 SIZES = {
     'LSMS-ethiopia-2018': {'train': 4559, 'val': 1302, 'test': 652, 'all': 6513}
 }
@@ -113,7 +115,9 @@ class Batcher():
 
         if self.shuffle:
             dataset = dataset.shuffle(self.buffer_size).batch(self.batch_size).repeat()
+            dataset = dataset.prefetch(buffer_size=AUTOTUNE)
         else:
             dataset = dataset.batch(self.batch_size).repeat()
+            dataset = dataset.prefetch(buffer_size=AUTOTUNE)
 
         return dataset
