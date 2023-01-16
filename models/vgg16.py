@@ -20,6 +20,7 @@ def VGG16(
         input_shape=(224, 224, 3),
         pooling=None,
         classes=1000,
+        custom_top_classes=1,
         classifier_activation="softmax",
 ):
     if not (weights in {"imagenet", None} or tf.io.gfile.exists(weights)):
@@ -144,7 +145,7 @@ def VGG16(
         x = tf.keras.layers.Dense(4096, activation="relu", name="fc2")(x)
         x = tf.keras.layers.Dense(1000, activation="relu", name="fc3")(x)
 
-        x = tf.keras.layers.Dense(1, activation="linear", name="predictions")(x)
+        x = tf.keras.layers.Dense(custom_top_classes, activation="sigmoid", name="predictions")(x)
 
         model = tf.keras.models.Model(inputs=model.inputs, outputs=x)
 
