@@ -63,7 +63,6 @@ def model_train(training, validation):
 
     history = model.fit(
         x=training,
-        steps_per_execution=70,
         steps_per_epoch=int(4559 / batch_num),
         epochs=epoch_num,
         validation_data=validation,
