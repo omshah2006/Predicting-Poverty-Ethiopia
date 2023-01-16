@@ -14,12 +14,13 @@ WEIGHTS_PATH_NO_TOP = (
 
 
 def VGG16(
-    include_top=True,
-    weights="imagenet",
-    input_shape=(224, 224, 3),
-    pooling=None,
-    classes=1000,
-    classifier_activation="softmax",
+        include_top=False,
+        include_custom_top=True,
+        weights="imagenet",
+        input_shape=(224, 224, 3),
+        pooling=None,
+        classes=1000,
+        classifier_activation="softmax",
 ):
     if not (weights in {"imagenet", None} or tf.io.gfile.exists(weights)):
         raise ValueError(
@@ -132,5 +133,19 @@ def VGG16(
         model.load_weights(weights_path)
     elif weights is not None:
         model.load_weights(weights)
+
+    if include_custom_top:
+        # Set up trainable and non-trainable layers
+        for layer in model.layers:
+            layer.trainable = False
+
+        x = tf.keras.layers.Flatten(name="flatten")(model.layers[-1].output)
+        x = tf.keras.layers.Dense(4096, activation="relu", name="fc1")(x)
+        x = tf.keras.layers.Dense(4096, activation="relu", name="fc2")(x)
+        x = tf.keras.layers.Dense(1000, activation="relu", name="fc3")(x)
+
+        x = tf.keras.layers.Dense(1, activation="linear", name="predictions")(x)
+
+        model = tf.keras.models.Model(inputs=model.inputs, outputs=x)
 
     return model

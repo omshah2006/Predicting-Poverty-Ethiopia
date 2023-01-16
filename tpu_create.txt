@@ -1,0 +1,6 @@
+Create a TPU VM instance:
+gcloud compute tpus tpu-vm create ppt-central \
+  --zone=us-central1-f \
+  --accelerator-type=v2-8 \
+  --version=tpu-vm-tf-2.11.0 \
+  --preemptible
