@@ -6,13 +6,10 @@ import matplotlib.pyplot as plt
 from dataset import batcher
 
 print("this is before the resolver code")
-resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='ppt-c')
-tf.config.experimental_connect_to_cluster(resolver)
-# TPU initialization
-tf.tpu.experimental.initialize_tpu_system(resolver)
-print("All devices: ", tf.config.list_logical_devices('TPU'))
-
-strategy = tf.distribute.TPUStrategy(resolver)
+cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
+tf.config.experimental_connect_to_cluster(cluster_resolver)
+tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
+strategy = tf.distribute.TPUStrategy(cluster_resolver)
 
 print("this is after the resolver code")
 
