@@ -34,7 +34,7 @@ def model_train(train_features, train_labels, val_features, val_labels):
     # training definition
     batch_num = 64
     epoch_num = 20
-    opt = tf.keras.optimizers.Adam(learning_rate=0.0001, decay=1e-6)
+    opt = tf.keras.optimizers.legacy.Adam(learning_rate=0.0001, decay=1e-6)
     # datagen = tf.keras.preprocessing.image.ImageDataGenerator(
     #     rotation_range=15,
     #     width_shift_range=0.1,
