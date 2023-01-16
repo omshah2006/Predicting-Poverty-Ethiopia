@@ -20,15 +20,7 @@ lr = 0.0001
 batch_size = 128
 EPOCHS = 50
 
-# Build your model here
-vgg_model = vgg16.VGG16(
-    include_top=False,
-    weights="imagenet",
-    input_shape=(224, 224, 3),
-    pooling="max",
-    classes=10,
-    classifier_activation="softmax",
-)
+
 # for layer in model.layers:
 #     layer.trainable = False
 #
@@ -43,10 +35,6 @@ vgg_model = vgg16.VGG16(
 
 
 def model_train(training, validation):
-    # model definition
-    model = vgg_model
-    print(model.summary())
-
     # training definition
     batch_num = 64
     epoch_num = 20
@@ -61,6 +49,19 @@ def model_train(training, validation):
 
     # train
     with strategy.scope():
+        # Build your model here
+        vgg_model = vgg16.VGG16(
+            include_top=False,
+            weights="imagenet",
+            input_shape=(224, 224, 3),
+            pooling="max",
+            classes=10,
+            classifier_activation="softmax",
+        )
+
+        model = vgg_model
+        print(model.summary())
+
         model.compile(loss='MeanSquaredError', optimizer="SGD", metrics=['RootMeanSquaredError'])
 
     history = model.fit(
