@@ -5,7 +5,7 @@ import time
 import matplotlib.pyplot as plt
 from dataset import batcher
 
-
+print("this is before the resolver code")
 resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='ppt-c')
 tf.config.experimental_connect_to_cluster(resolver)
 # TPU initialization
@@ -14,6 +14,7 @@ print("All devices: ", tf.config.list_logical_devices('TPU'))
 
 strategy = tf.distribute.TPUStrategy(resolver)
 
+print("this is after the resolver code")
 
 lr = 0.0001
 batch_size = 128
