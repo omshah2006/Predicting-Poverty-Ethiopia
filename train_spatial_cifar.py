@@ -45,7 +45,7 @@ def model_train(train_features, train_labels, val_features, val_labels):
         model = vgg_model
         print(model.summary())
 
-        model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'], steps_per_execution=32)
+        model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     tf.profiler.experimental.server.start(6000)
 
