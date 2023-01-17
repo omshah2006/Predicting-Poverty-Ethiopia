@@ -15,7 +15,7 @@ def model_train(training, validation):
     # training definition
     batch_num = 512
     epoch_num = 20
-    opt = tf.keras.optimizers.Adam(learning_rate=0.0001, decay=1e-6)
+    opt = tf.keras.optimizers.Adam(learning_rate=0.0001)
     # datagen = tf.keras.preprocessing.image.ImageDataGenerator(
     #     rotation_range=15,
     #     width_shift_range=0.1,
