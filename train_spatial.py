@@ -1,14 +1,15 @@
 import tensorflow as tf
 from models import vgg16
+from models import regularized_vgg16
 import numpy as np
 import time
 from dataset import batcher
 
 
-cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
-tf.config.experimental_connect_to_cluster(cluster_resolver)
-tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
-strategy = tf.distribute.TPUStrategy(cluster_resolver)
+# cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
+# tf.config.experimental_connect_to_cluster(cluster_resolver)
+# tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
+# strategy = tf.distribute.TPUStrategy(cluster_resolver)
 
 
 def model_train(training, validation):
@@ -24,22 +25,24 @@ def model_train(training, validation):
     # datagen.fit(train_feature)
 
     # train
-    with strategy.scope():
-        opt = tf.keras.optimizers.SGD(learning_rate=0.0001)
-        # Build your model here
-        vgg_model = vgg16.VGG16(
-            include_imagenet_top=False,
-            weights="imagenet",
-            input_shape=(224, 224, 3),
-            pooling="max",
-            classes=1,
-            classifier_activation="softmax",
-        )
+    # with strategy.scope():
+    opt = tf.keras.optimizers.SGD(learning_rate=0.0001)
+    # Build your model here
+    # vgg_model = vgg16.VGG16(
+    #     include_imagenet_top=False,
+    #     weights="imagenet",
+    #     input_shape=(224, 224, 3),
+    #     pooling="max",
+    #     classes=1,
+    #     classifier_activation="softmax",
+    # )
 
-        model = vgg_model
-        print(model.summary())
+    vgg_model = regularized_vgg16.regularized_vgg16(1)
 
-        model.compile(loss='MeanSquaredError', optimizer=opt, metrics=['RootMeanSquaredError'], steps_per_execution=32)
+    model = vgg_model
+    print(model.summary())
+
+    model.compile(loss='MeanSquaredError', optimizer=opt, metrics=['RootMeanSquaredError'], steps_per_execution=32)
 
     tf.profiler.experimental.server.start(6000)
 
@@ -56,9 +59,9 @@ def model_train(training, validation):
     return model
 
 
-train_batcher = batcher.Batcher(shuffle=True, split='train').get_dataset()
-val_batcher = batcher.Batcher(shuffle=False, split='val').get_dataset()
-test_batcher = batcher.Batcher(shuffle=False, split='test').get_dataset()
+train_batcher = batcher.Batcher(bucket=False, shuffle=True, split='train').get_dataset()
+val_batcher = batcher.Batcher(bucket=False, shuffle=False, split='val').get_dataset()
+test_batcher = batcher.Batcher(bucket=False, shuffle=False, split='test').get_dataset()
 
 
 # train model
