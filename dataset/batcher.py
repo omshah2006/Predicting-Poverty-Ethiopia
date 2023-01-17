@@ -49,7 +49,7 @@ class Batcher():
         self.scalar_keys = ['lat', 'lon', 'consumption']
         self.label = ['consumption']
         self.features = self.bands + self.scalar_keys + self.label
-        self.buffer_size = 2000
+        self.buffer_size = 50
         self.batch_size = batch_size
         self.shuffle = shuffle
 
