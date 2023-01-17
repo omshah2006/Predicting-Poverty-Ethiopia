@@ -11,14 +11,10 @@ tf.config.experimental_connect_to_cluster(cluster_resolver)
 tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
 strategy = tf.distribute.TPUStrategy(cluster_resolver)
 
-lr = 0.0001
-batch_size = 128
-EPOCHS = 50
-
 
 def model_train(training, validation):
     # training definition
-    batch_num = 1024
+    batch_num = 512
     epoch_num = 20
     # opt = tf.keras.optimizers.Adam(learning_rate=0.0001, decay=1e-6)
     # datagen = tf.keras.preprocessing.image.ImageDataGenerator(

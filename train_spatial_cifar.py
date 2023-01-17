@@ -18,7 +18,7 @@ EPOCHS = 50
 
 def model_train(train_features, train_labels, val_features, val_labels):
     # training definition
-    batch_num = 64
+    batch_num = 8 * strategy.num_replicas_in_sync
     epoch_num = 20
     opt = tf.keras.optimizers.legacy.Adam(learning_rate=0.0001, decay=1e-6)
     # datagen = tf.keras.preprocessing.image.ImageDataGenerator(
@@ -45,7 +45,7 @@ def model_train(train_features, train_labels, val_features, val_labels):
         model = vgg_model
         print(model.summary())
 
-        model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
+        model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'], steps_per_execution=32)
 
     tf.profiler.experimental.server.start(6000)
 
