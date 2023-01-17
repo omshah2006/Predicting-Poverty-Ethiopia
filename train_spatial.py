@@ -2,7 +2,6 @@ import tensorflow as tf
 from models import vgg16
 import numpy as np
 import time
-import matplotlib.pyplot as plt
 from dataset import batcher
 
 
@@ -29,18 +28,18 @@ def model_train(training, validation):
     with strategy.scope():
         # Build your model here
         vgg_model = vgg16.VGG16(
-            include_top=False,
+            include_imagenet_top=False,
             weights="imagenet",
             input_shape=(224, 224, 3),
             pooling="max",
-            classes=10,
+            classes=1,
             classifier_activation="softmax",
         )
 
         model = vgg_model
         print(model.summary())
 
-        model.compile(loss='MeanSquaredError', optimizer="SGD", metrics=['RootMeanSquaredError'], steps_per_execution=32)
+        model.compile(loss='MeanSquaredError', optimizer="Adam", metrics=['RootMeanSquaredError'], steps_per_execution=32)
 
     tf.profiler.experimental.server.start(6000)
 

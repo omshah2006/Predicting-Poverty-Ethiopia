@@ -33,12 +33,11 @@ def model_train(train_features, train_labels, val_features, val_labels):
     with strategy.scope():
         # Build your model here
         vgg_model = vgg16.VGG16(
-            include_top=False,
+            include_imagenet_top=False,
             weights="imagenet",
             input_shape=(224, 224, 3),
             pooling="max",
             classes=10,
-            custom_top_classes=10,
             classifier_activation="softmax",
         )
 

@@ -14,13 +14,12 @@ WEIGHTS_PATH_NO_TOP = (
 
 
 def VGG16(
-        include_top=False,
+        include_imagenet_top=False,
         include_custom_top=True,
         weights="imagenet",
         input_shape=(224, 224, 3),
         pooling=None,
         classes=1000,
-        custom_top_classes=1,
         classifier_activation="softmax",
 ):
     if not (weights in {"imagenet", None} or tf.io.gfile.exists(weights)):
@@ -32,7 +31,7 @@ def VGG16(
             f"weights={weights}"
         )
 
-    if weights == "imagenet" and include_top and classes != 1000:
+    if weights == "imagenet" and include_imagenet_top and classes != 1000:
         raise ValueError(
             'If using `weights` as `"imagenet"` with `include_top` '
             "as true, `classes` should be 1000.  "
@@ -96,7 +95,7 @@ def VGG16(
     )(x)
     x = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name="block5_pool")(x)
 
-    if include_top:
+    if include_imagenet_top:
         # Classification block
         x = tf.keras.layers.Flatten(name="flatten")(x)
         x = tf.keras.layers.Dense(4096, activation="relu", name="fc1")(x)
@@ -117,7 +116,7 @@ def VGG16(
 
     # Load weights.
     if weights == "imagenet":
-        if include_top:
+        if include_imagenet_top:
             weights_path = tf.keras.utils.get_file(
                 "vgg16_weights_tf_dim_ordering_tf_kernels.h5",
                 WEIGHTS_PATH,
@@ -145,7 +144,7 @@ def VGG16(
         x = tf.keras.layers.Dense(4096, activation="relu", name="fc2")(x)
         x = tf.keras.layers.Dense(1000, activation="relu", name="fc3")(x)
 
-        x = tf.keras.layers.Dense(custom_top_classes, activation="sigmoid", name="predictions")(x)
+        x = tf.keras.layers.Dense(classes, activation="sigmoid", name="predictions")(x)
 
         model = tf.keras.models.Model(inputs=model.inputs, outputs=x)
 

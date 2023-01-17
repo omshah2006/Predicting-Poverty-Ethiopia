@@ -3,7 +3,6 @@ import tensorflow as tf
 import numpy as np
 import random
 
-from tensorflow.python.data import AUTOTUNE
 
 SIZES = {
     'LSMS-ethiopia-2018': {'train': 4559, 'val': 1302, 'test': 652, 'all': 6513}
@@ -42,14 +41,14 @@ def get_tfrecord_paths(split, bucket=True):
 
 
 class Batcher():
-    def __init__(self, shuffle, num_records=None, batch_size=512, split='all'):
-        self.tfrecords_paths = get_tfrecord_paths(split=split)
+    def __init__(self, bucket=True, num_records=None, buffer_size=5000, batch_size=512, shuffle=True, split='all'):
+        self.tfrecords_paths = get_tfrecord_paths(split=split, bucket=bucket)
         self.num_records = num_records
         self.bands = ['BLUE', 'GREEN', 'RED']
         self.scalar_keys = ['lat', 'lon', 'consumption']
         self.label = ['consumption']
         self.features = self.bands + self.scalar_keys + self.label
-        self.buffer_size = 2048
+        self.buffer_size = buffer_size
         self.batch_size = batch_size
         self.shuffle = shuffle
 
@@ -86,7 +85,7 @@ class Batcher():
         ]
 
         features_dict = dict(zip(self.features, columns))
-        # print(features_dict)
+
         return tf.io.parse_single_example(example_proto, features_dict)
 
     def to_tuple(self, example):
@@ -99,27 +98,23 @@ class Batcher():
         stacked = tf.stack(inputs_list, axis=0)
         # Convert from CHW to HWC
         stacked = tf.transpose(stacked, [1, 2, 0])
-
+        # Standardize consumption
         label = (example.get('consumption') - CONSUMPTION_MEAN) / CONSUMPTION_STD
 
         sample = (stacked, label)
-        # print(stacked[:, :, :len(self.bands)], example.get('consumption'))
-        # stacked[:, :, len(self.bands):]
+
         return sample
 
     def get_dataset(self):
-        # print(get_tfrecord_paths(tfrecord_dir='data/lsms_tfrecords/'))
         dataset = tf.data.TFRecordDataset(filenames=self.tfrecords_paths)
         dataset = dataset.map(self.parse_tfrecord, num_parallel_calls=tf.data.AUTOTUNE)
         dataset = dataset.map(self.to_tuple, num_parallel_calls=tf.data.AUTOTUNE)
 
         if self.shuffle:
-            dataset = dataset.cache().repeat().shuffle(buffer_size=5000).batch(self.batch_size)
-                #dataset.shuffle(self.buffer_size).batch(self.batch_size).repeat().cache()
-            dataset = dataset.prefetch(buffer_size=AUTOTUNE)
+            dataset = dataset.cache().repeat().shuffle(buffer_size=self.buffer_size).batch(self.batch_size)
+            dataset = dataset.prefetch(buffer_size=tf.data.AUTOTUNE)
         else:
             dataset = dataset.cache().repeat().batch(self.batch_size)
-                # dataset.batch(self.batch_size).repeat().cache()
-            dataset = dataset.prefetch(buffer_size=AUTOTUNE)
+            dataset = dataset.prefetch(buffer_size=tf.data.AUTOTUNE)
 
         return dataset
