@@ -39,7 +39,7 @@ def model_train(training, validation):
         model = vgg_model
         print(model.summary())
 
-        model.compile(loss='MeanSquaredError', optimizer="Adam", metrics=['RootMeanSquaredError'], steps_per_execution=32)
+        model.compile(loss='MeanSquaredError', optimizer="SGD", metrics=['RootMeanSquaredError'], steps_per_execution=32)
 
     tf.profiler.experimental.server.start(6000)
 
