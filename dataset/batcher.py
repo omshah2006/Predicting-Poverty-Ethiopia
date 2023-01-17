@@ -110,8 +110,8 @@ class Batcher():
     def get_dataset(self):
         # print(get_tfrecord_paths(tfrecord_dir='data/lsms_tfrecords/'))
         dataset = tf.data.TFRecordDataset(filenames=self.tfrecords_paths)
-        dataset = dataset.map(self.parse_tfrecord, num_parallel_calls=5)
-        dataset = dataset.map(self.to_tuple, num_parallel_calls=5)
+        dataset = dataset.map(self.parse_tfrecord, num_parallel_calls=tf.data.AUTOTUNE)
+        dataset = dataset.map(self.to_tuple, num_parallel_calls=tf.data.AUTOTUNE)
 
         if self.shuffle:
             dataset = dataset.shuffle(self.buffer_size).batch(self.batch_size).repeat()
