@@ -15,7 +15,7 @@ def model_train(training, validation):
     # training definition
     batch_num = 512
     epoch_num = 20
-    opt = tf.keras.optimizers.Adam(learning_rate=0.0001)
+    opt = tf.keras.optimizers.SGD(learning_rate=0.0001)
     # datagen = tf.keras.preprocessing.image.ImageDataGenerator(
     #     rotation_range=15,
     #     width_shift_range=0.1,
@@ -39,7 +39,7 @@ def model_train(training, validation):
         model = vgg_model
         print(model.summary())
 
-        model.compile(loss='MeanSquaredError', optimizer="SGD", metrics=['RootMeanSquaredError'], steps_per_execution=32)
+        model.compile(loss='MeanSquaredError', optimizer=opt, metrics=['RootMeanSquaredError'], steps_per_execution=32)
 
     tf.profiler.experimental.server.start(6000)
 
