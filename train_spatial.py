@@ -15,7 +15,6 @@ def model_train(training, validation):
     # training definition
     batch_num = 512
     epoch_num = 20
-    opt = tf.keras.optimizers.SGD(learning_rate=0.0001)
     # datagen = tf.keras.preprocessing.image.ImageDataGenerator(
     #     rotation_range=15,
     #     width_shift_range=0.1,
@@ -26,6 +25,7 @@ def model_train(training, validation):
 
     # train
     with strategy.scope():
+        opt = tf.keras.optimizers.SGD(learning_rate=0.0001)
         # Build your model here
         vgg_model = vgg16.VGG16(
             include_imagenet_top=False,
