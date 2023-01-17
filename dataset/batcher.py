@@ -114,10 +114,10 @@ class Batcher():
         dataset = dataset.map(self.to_tuple, num_parallel_calls=tf.data.AUTOTUNE)
 
         if self.shuffle:
-            dataset = dataset.shuffle(self.buffer_size).batch(self.batch_size).repeat()
+            dataset = dataset.shuffle(self.buffer_size).batch(self.batch_size).repeat().cache()
             dataset = dataset.prefetch(buffer_size=AUTOTUNE)
         else:
-            dataset = dataset.batch(self.batch_size).repeat()
+            dataset = dataset.batch(self.batch_size).repeat().cache()
             dataset = dataset.prefetch(buffer_size=AUTOTUNE)
 
         return dataset
