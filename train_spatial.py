@@ -16,8 +16,8 @@ strategy = tf.distribute.TPUStrategy(cluster_resolver)
 
 def model_train(training, validation):
     # training definition
-    batch_num = 256
-    epoch_num = 5
+    batch_num = 512
+    epoch_num = 1
     # datagen = tf.keras.preprocessing.image.ImageDataGenerator(
     #     rotation_range=15,
     #     width_shift_range=0.1,
@@ -65,8 +65,8 @@ def model_train(training, validation):
     plt.xlabel('epoch')
     plt.legend(['train', 'val'], loc='upper left')
     fig_name = 'loss-plot-bnmodel.png'
-    plt.savefig('/plots/' + fig_name)
-    upload_to_bucket(fig_name, '/plots/' + fig_name, )
+    plt.savefig('models/plots/' + fig_name)
+    upload_to_bucket(fig_name, 'models/plots/' + fig_name)
 
     return model
 
