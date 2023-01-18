@@ -16,7 +16,7 @@ strategy = tf.distribute.TPUStrategy(cluster_resolver)
 
 def model_train(training, validation):
     # training definition
-    batch_num = 512
+    batch_num = 256
     epoch_num = 5
     # datagen = tf.keras.preprocessing.image.ImageDataGenerator(
     #     rotation_range=15,
@@ -30,16 +30,16 @@ def model_train(training, validation):
     with strategy.scope():
         opt = tf.keras.optimizers.SGD(learning_rate=0.00001)
         # Build your model here
-        vgg_model = vgg16.VGG16(
-            include_imagenet_top=False,
-            weights="imagenet",
-            input_shape=(224, 224, 3),
-            pooling="max",
-            classes=1,
-            classifier_activation="linear",
-        )
+        # vgg_model = vgg16.VGG16(
+        #     include_imagenet_top=False,
+        #     weights="imagenet",
+        #     input_shape=(224, 224, 3),
+        #     pooling="max",
+        #     classes=1,
+        #     classifier_activation="linear",
+        # )
 
-        # vgg_model = regularized_vgg16.regularized_vgg16(1)
+        vgg_model = regularized_vgg16.regularized_vgg16(1)
 
         model = vgg_model
         print(model.summary())
@@ -64,7 +64,7 @@ def model_train(training, validation):
     plt.ylabel('loss')
     plt.xlabel('epoch')
     plt.legend(['train', 'val'], loc='upper left')
-    fig_name = 'loss-plot.png'
+    fig_name = 'loss-plot-bnmodel.png'
     plt.savefig('/plots/' + fig_name)
     upload_to_bucket(fig_name, '/plots/' + fig_name, )
 
