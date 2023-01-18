@@ -1,5 +1,7 @@
 import tensorflow as tf
 from models import vgg16
+import matplotlib.pyplot as plt
+from google.cloud import storage
 from models import regularized_vgg16
 import numpy as np
 import time
@@ -15,7 +17,7 @@ strategy = tf.distribute.TPUStrategy(cluster_resolver)
 def model_train(training, validation):
     # training definition
     batch_num = 512
-    epoch_num = 20
+    epoch_num = 5
     # datagen = tf.keras.preprocessing.image.ImageDataGenerator(
     #     rotation_range=15,
     #     width_shift_range=0.1,
@@ -26,7 +28,7 @@ def model_train(training, validation):
 
     # train
     with strategy.scope():
-        opt = tf.keras.optimizers.SGD(learning_rate=0.000001)
+        opt = tf.keras.optimizers.SGD(learning_rate=0.00001)
         # Build your model here
         vgg_model = vgg16.VGG16(
             include_imagenet_top=False,
@@ -56,6 +58,16 @@ def model_train(training, validation):
         verbose=2,
     )
 
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'val'], loc='upper left')
+    fig_name = 'loss-plot.png'
+    plt.savefig('/plots/' + fig_name)
+    upload_to_bucket(fig_name, '/plots/' + fig_name, )
+
     return model
 
 
@@ -68,6 +80,17 @@ test_batcher = batcher.Batcher(shuffle=False, split='test').get_dataset()
 model = model_train(
     train_batcher, val_batcher
 )
+
+
+def upload_to_bucket(blob_name, path_to_file, bucket_name='ppt-central-bucket'):
+    storage_client = storage.Client()
+
+    bucket = storage_client.get_bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+    blob.upload_from_filename(path_to_file)
+
+    # returns a public url
+    return blob.public_url
 
 #accuracy evaluation
 # accuracy = model.evaluate(test_batcher, test_batcher)
