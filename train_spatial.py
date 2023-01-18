@@ -17,7 +17,7 @@ strategy = tf.distribute.TPUStrategy(cluster_resolver)
 def model_train(training, validation):
     # training definition
     batch_num = 512
-    epoch_num = 1
+    epoch_num = 100
     # datagen = tf.keras.preprocessing.image.ImageDataGenerator(
     #     rotation_range=15,
     #     width_shift_range=0.1,
@@ -30,16 +30,16 @@ def model_train(training, validation):
     with strategy.scope():
         opt = tf.keras.optimizers.SGD(learning_rate=0.00001)
         # Build your model here
-        # vgg_model = vgg16.VGG16(
-        #     include_imagenet_top=False,
-        #     weights="imagenet",
-        #     input_shape=(224, 224, 3),
-        #     pooling="max",
-        #     classes=1,
-        #     classifier_activation="linear",
-        # )
+        vgg_model = vgg16.VGG16(
+            include_imagenet_top=False,
+            weights="imagenet",
+            input_shape=(224, 224, 3),
+            pooling="max",
+            classes=1,
+            classifier_activation="linear",
+        )
 
-        vgg_model = regularized_vgg16.regularized_vgg16(1)
+        # vgg_model = regularized_vgg16.regularized_vgg16(1)
 
         model = vgg_model
         print(model.summary())
