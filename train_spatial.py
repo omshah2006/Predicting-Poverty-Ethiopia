@@ -7,11 +7,21 @@ import numpy as np
 import time
 from dataset import batcher
 
-
 cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
 tf.config.experimental_connect_to_cluster(cluster_resolver)
 tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
 strategy = tf.distribute.TPUStrategy(cluster_resolver)
+
+
+def upload_to_bucket(blob_name, path_to_file, bucket_name='ppt-central-bucket'):
+    storage_client = storage.Client()
+
+    bucket = storage_client.get_bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+    blob.upload_from_filename(path_to_file)
+
+    # returns a public url
+    return blob.public_url
 
 
 def model_train(training, validation):
@@ -30,16 +40,16 @@ def model_train(training, validation):
     with strategy.scope():
         opt = tf.keras.optimizers.SGD(learning_rate=0.00001)
         # Build your model here
-        vgg_model = vgg16.VGG16(
-            include_imagenet_top=False,
-            weights="imagenet",
-            input_shape=(224, 224, 3),
-            pooling="max",
-            classes=1,
-            classifier_activation="linear",
-        )
+        # vgg_model = vgg16.VGG16(
+        #     include_imagenet_top=False,
+        #     weights="imagenet",
+        #     input_shape=(224, 224, 3),
+        #     pooling="max",
+        #     classes=1,
+        #     classifier_activation="linear",
+        # )
 
-        # vgg_model = regularized_vgg16.regularized_vgg16(1)
+        vgg_model = regularized_vgg16.regularized_vgg16(1)
 
         model = vgg_model
         print(model.summary())
@@ -75,24 +85,12 @@ train_batcher = batcher.Batcher(shuffle=True, split='train').get_dataset()
 val_batcher = batcher.Batcher(shuffle=False, split='val').get_dataset()
 test_batcher = batcher.Batcher(shuffle=False, split='test').get_dataset()
 
-
 # train model
 model = model_train(
     train_batcher, val_batcher
 )
 
-
-def upload_to_bucket(blob_name, path_to_file, bucket_name='ppt-central-bucket'):
-    storage_client = storage.Client()
-
-    bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(blob_name)
-    blob.upload_from_filename(path_to_file)
-
-    # returns a public url
-    return blob.public_url
-
-#accuracy evaluation
+# accuracy evaluation
 # accuracy = model.evaluate(test_batcher, test_batcher)
 # print("\n[RootMeanSquaredError] = ", accuracy["RootMeanSquaredError"])
 #
