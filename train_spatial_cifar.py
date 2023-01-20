@@ -5,10 +5,10 @@ import time
 import matplotlib.pyplot as plt
 from dataset import batcher
 
-cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
-tf.config.experimental_connect_to_cluster(cluster_resolver)
-tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
-strategy = tf.distribute.TPUStrategy(cluster_resolver)
+# cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
+# tf.config.experimental_connect_to_cluster(cluster_resolver)
+# tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
+# strategy = tf.distribute.TPUStrategy(cluster_resolver)
 
 
 lr = 0.0001
@@ -16,7 +16,7 @@ batch_size = 128
 EPOCHS = 50
 
 
-def model_train(train_features, train_labels, val_features, val_labels):
+def train_model(train_features, train_labels, val_features, val_labels):
     # training definition
     batch_num = 8 * strategy.num_replicas_in_sync
     epoch_num = 20
@@ -32,12 +32,12 @@ def model_train(train_features, train_labels, val_features, val_labels):
     # train
     with strategy.scope():
         # Build your model here
-        vgg_model = vgg16.VGG16(
+        vgg_model = vgg16.vgg16(
             include_imagenet_top=False,
             weights="imagenet",
             input_shape=(224, 224, 3),
             pooling="max",
-            classes=10,
+            num_classes=10,
             classifier_activation="softmax",
         )
 
@@ -65,8 +65,8 @@ def model_train(train_features, train_labels, val_features, val_labels):
 # val_batcher = batcher.Batcher(shuffle=False, split='val').get_dataset()
 # test_batcher = batcher.Batcher(shuffle=False, split='test').get_dataset()
 
-batcher = batcher.Batcher(shuffle=True)
-train_feature, train_label, test_feature, test_label = batcher.create_dataset()
+batcher = batcher.Batcher(bucket=False, shuffle=True)
+train_feature, train_label, test_feature, test_label = batcher.create_cifar_dataset()
 
 # data preprocessing
 # reshape
@@ -87,7 +87,7 @@ train_feature, train_label, test_feature, test_label = batcher.create_dataset()
 # test_label_onehot = tf.keras.utils.to_categorical(test_label)
 #
 # train model
-model = model_train(
+model = train_model(
     train_feature, train_label, test_feature, test_label
 )
 

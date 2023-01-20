@@ -17,22 +17,13 @@ def regularized_vgg16(
     num_classes,
     weights='imagenet',
     use_custom_top=True,
+    input_shape=(224, 224, 3),
     batch_size=None,
     use_l2_regularizer=True,
     batch_norm_decay=0.9,
     batch_norm_epsilon=1e-5,
 ):
-    """Instantiates the VGG16 architecture.
-    Args:
-      num_classes: `int` number of classes for image classification.
-      batch_size: Size of the batches for each step.
-      use_l2_regularizer: whether to use L2 regularizer on Conv/Dense layer.
-      batch_norm_decay: Moment of batch norm layers.
-      batch_norm_epsilon: Epsilon of batch borm layers.
-    Returns:
-      A Keras model instance.
-    """
-    input_shape = (224, 224, 3)
+
     img_input = layers.Input(shape=input_shape, batch_size=batch_size)
 
     x = img_input

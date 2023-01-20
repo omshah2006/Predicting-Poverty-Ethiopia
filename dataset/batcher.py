@@ -54,7 +54,7 @@ class Batcher():
         self.batch_size = batch_size
         self.shuffle = shuffle
 
-    def create_dataset(self):
+    def create_cifar_dataset(self):
         # load cifar10 data
         (train_feature, train_label), (
             test_feature,

@@ -7,10 +7,17 @@ import numpy as np
 import time
 from dataset import batcher
 
-cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
-tf.config.experimental_connect_to_cluster(cluster_resolver)
-tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
-strategy = tf.distribute.TPUStrategy(cluster_resolver)
+
+def use_distributed_strategy(strategy_type):
+    if strategy_type == "tpu":
+        cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver()
+        tf.config.experimental_connect_to_cluster(cluster_resolver)
+        tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
+        strategy = tf.distribute.TPUStrategy(cluster_resolver)
+    else:
+        strategy = tf.distribute.MirroredStrategy()
+
+    return strategy
 
 
 def upload_to_bucket(blob_name, path_to_file, bucket_name='ppt-central-bucket'):
@@ -24,7 +31,7 @@ def upload_to_bucket(blob_name, path_to_file, bucket_name='ppt-central-bucket'):
     return blob.public_url
 
 
-def model_train(training, validation):
+def train_model(use_tpu, training, validation):
     # training definition
     batch_num = 512
     epoch_num = 100
@@ -35,6 +42,8 @@ def model_train(training, validation):
     #     horizontal_flip=True,
     # )
     # datagen.fit(train_feature)
+
+    strategy = use_distributed_strategy('tpu')
 
     # train
     with strategy.scope():
@@ -49,14 +58,12 @@ def model_train(training, validation):
         #     classifier_activation="linear",
         # )
 
-        vgg_model = regularized_vgg16.regularized_vgg16(1)
+        vgg_model = regularized_vgg16.regularized_vgg16(num_classes=1)
 
         model = vgg_model
         print(model.summary())
 
         model.compile(loss='MeanSquaredError', optimizer=opt, metrics=['RootMeanSquaredError'], steps_per_execution=32)
-
-    tf.profiler.experimental.server.start(6000)
 
     history = model.fit(
         x=training,
@@ -86,7 +93,7 @@ val_batcher = batcher.Batcher(shuffle=False, split='val').get_dataset()
 test_batcher = batcher.Batcher(shuffle=False, split='test').get_dataset()
 
 # train model
-model = model_train(
+model = train_model(
     train_batcher, val_batcher
 )
 
