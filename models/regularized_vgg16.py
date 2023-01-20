@@ -252,6 +252,7 @@ def regularized_vgg16(
         )
         base_model.load_weights(weights_path, by_name=True)
 
+    # Add final trainable layers to top of model
     if use_custom_top:
         for layer in base_model.layers:
             layer.trainable = False
@@ -278,6 +279,5 @@ def regularized_vgg16(
         model = tf.keras.models.Model(img_input, x, name="vgg16_full")
     else:
         model = tf.keras.models.Model(img_input, x, name="vgg16_headless")
-
 
     return model

@@ -1,0 +1,35 @@
+SSH: Attempting to connect to worker 0...
+Connection reset by 35.192.102.154 port 22
+Retrying: SSH command error: [/usr/bin/ssh] exited with return code [255].
+SSH: Attempting to connect to worker 0...
+ssh_dispatch_run_fatal: Connection to 35.192.102.154 port 22: Can't assign requested address
+Retrying: SSH command error: [/usr/bin/ssh] exited with return code [255].
+SSH: Attempting to connect to worker 0...
+Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.15.0-1022-gcp x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Jan 19 01:17:25 UTC 2023
+
+  System load:  0.12               Processes:                890
+  Usage of /:   13.4% of 96.73GB   Users logged in:          0
+  Memory usage: 0%                 IPv4 address for docker0: 172.17.0.1
+  Swap usage:   0%                 IPv4 address for ens8:    10.128.0.5
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+9 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+3 updates could not be installed automatically. For more details,
+see /var/log/unattended-upgrades/unattended-upgrades.log
+
+Last login: Wed Jan 18 18:57:08 2023 from 146.129.249.100
+]0;omshah@t1v-n-caa880f8-w-0: ~[01;32momshah@t1v-n-caa880f8-w-0[00m:[01;34m~[00m$ ]0;omshah@t1v-n-caa880f8-w-0: ~[01;32momshah@t1v-n-caa880f8-w-0[00m:[01;34m~[00m$ logout
+Connection to 35.192.102.154 closed.
