@@ -48,7 +48,7 @@ def run_cifar_sample_cnn():
         metrics=["accuracy"],
         steps_per_execution=32,
         num_epochs=100,
-        train_steps=int(500 / 64),
+        train_steps=int(50000 / 512),
         val_steps=10000,
         verbose=2,
     )
