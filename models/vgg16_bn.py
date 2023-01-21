@@ -13,7 +13,7 @@ def _gen_l2_regularizer(use_l2_regularizer=True, l2_weight_decay=1e-4):
     return tf.keras.regularizers.L2(l2_weight_decay) if use_l2_regularizer else None
 
 
-def regularized_vgg16(
+def vgg16_bn(
     num_classes,
     weights='imagenet',
     use_custom_top=True,
@@ -24,7 +24,7 @@ def regularized_vgg16(
     batch_norm_epsilon=1e-5,
 ):
 
-    img_input = layers.Input(shape=input_shape, batch_size=batch_size)
+    img_input = layers.Input(shape=input_shape)
 
     x = img_input
 

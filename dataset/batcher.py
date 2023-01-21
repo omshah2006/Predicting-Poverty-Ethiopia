@@ -1,7 +1,7 @@
 import os
 import tensorflow as tf
 import numpy as np
-import random
+import tensorflow_datasets as tfds
 
 
 SIZES = {
@@ -42,7 +42,7 @@ def get_tfrecord_paths(split, bucket=True):
     return tfrecord_paths
 
 
-class Batcher():
+class Batcher:
     def __init__(self, bucket=True, num_records=None, buffer_size=5000, batch_size=512, shuffle=True, split='all'):
         self.tfrecords_paths = get_tfrecord_paths(split=split, bucket=bucket)
         self.num_records = num_records
@@ -79,7 +79,25 @@ class Batcher():
         train_label_onehot = tf.keras.utils.to_categorical(train_label)
         test_label_onehot = tf.keras.utils.to_categorical(test_label)
 
-        return train_feature_normal, train_label_onehot, test_feature_normal, test_label_onehot
+        return (train_feature_normal, train_label_onehot), (test_feature_normal, test_label_onehot)
+
+    def create_cifar_dataset_test(self):
+        train_ds, test_ds = tfds.load('cifar10', split=['train', 'test'], as_supervised=True)
+
+        def normalize_resize(image, label):
+            image = tf.cast(image, tf.float32)
+            image = tf.divide(image, 255)
+            image = tf.image.resize(image, (224, 224))
+            label = tf.one_hot(label, 10)
+            return image, label
+
+        train = train_ds.map(normalize_resize, num_parallel_calls=tf.data.AUTOTUNE)
+        test = test_ds.map(normalize_resize, num_parallel_calls=tf.data.AUTOTUNE)
+
+        train = train.cache().repeat().shuffle(buffer_size=self.buffer_size).batch(self.batch_size)
+        test = test.cache().repeat().batch(self.batch_size)
+
+        return train, test
 
     def parse_tfrecord(self, example_proto):
         columns = [tf.io.FixedLenFeature(shape=[65025], dtype=tf.float32) for k in self.bands] + [

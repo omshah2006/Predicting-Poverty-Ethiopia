@@ -14,6 +14,7 @@ def vgg16(
     weights="imagenet",
     use_custom_top=True,
     input_shape=(224, 224, 3),
+    batch_size=None,
 ):
 
     inputs = layers.Input(shape=input_shape)
@@ -94,10 +95,9 @@ def vgg16(
         x = layers.Flatten(name="flatten")(base_model.layers[-1].output)
         x = layers.Dense(4096, activation="relu", name="fc1")(x)
         x = layers.Dense(4096, activation="relu", name="fc2")(x)
-        x = layers.Dense(1000, activation="relu", name="fc3")(x)
 
         x = layers.Dense(num_classes, activation="linear", name="predictions")(x)
 
-    model = tf.keras.models.Model(inputs=base_model.inputs, outputs=x)
+    model = tf.keras.models.Model(inputs=base_model.inputs, outputs=x, name="vgg16")
 
     return model
