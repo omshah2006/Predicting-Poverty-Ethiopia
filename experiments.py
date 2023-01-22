@@ -31,14 +31,14 @@ def run_cifar_vgg16():
 
 def run_cifar_vgg16_bn():
     trained_model = train_model(
-        experiment_name='cifar_vgg16_bn',
+        experiment_name='cifar_vgg16_bn_100_epoch_run',
         platform="cloud",
         strategy="tpu",
         model_name="vgg16_bn",
         dataset="cifar",
         optimizer="adam",
         lr_rate=0.00001,
-        num_classes=10,
+        num_classes=100,
         weights="imagenet",
         use_custom_top=True,
         input_shape=(32, 32, 3),
