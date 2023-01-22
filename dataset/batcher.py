@@ -65,7 +65,7 @@ class Batcher:
         # data preprocessing
         # reshape
         train_feature_vector = tf.image.resize(train_feature, [self.image_shape[0], self.image_shape[1]], method="nearest")
-        test_feature_vector = tf.image.resize(test_feature, [32, 32], method="nearest")
+        test_feature_vector = tf.image.resize(test_feature, [self.image_shape[0], self.image_shape[1]], method="nearest")
 
         # feature normalization
         # z-score
