@@ -94,8 +94,8 @@ class Batcher:
         train = train_ds.map(normalize_resize, num_parallel_calls=tf.data.AUTOTUNE)
         test = test_ds.map(normalize_resize, num_parallel_calls=tf.data.AUTOTUNE)
 
-        train = train.cache().repeat().shuffle(buffer_size=self.buffer_size).batch(self.batch_size)
-        test = test.cache().repeat().batch(self.batch_size)
+        train = train.cache().repeat().shuffle(buffer_size=self.buffer_size).batch(self.batch_size).prefetch(buffer_size=tf.data.AUTOTUNE)
+        test = test.cache().repeat().batch(self.batch_size).prefetch(buffer_size=tf.data.AUTOTUNE)
 
         return train, test
 
