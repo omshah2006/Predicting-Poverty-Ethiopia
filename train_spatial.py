@@ -22,7 +22,7 @@ def use_distributed_strategy(strategy_type):
     return strategy
 
 
-def create_loss_plot(platform, history, fig_name):
+def create_metrics_plots(platform, history, fig_name):
     plt.plot(history.history["loss"])
     plt.plot(history.history["val_loss"])
     plt.title("model loss")
@@ -32,7 +32,7 @@ def create_loss_plot(platform, history, fig_name):
     plt.savefig("models/plots/" + fig_name)
 
     if platform == "cloud":
-        upload_to_bucket(fig_name, "models/plots/" + fig_name)
+        upload_to_bucket(fig_name, "models/plots/" + fig_name + ".png")
 
 
 def upload_to_bucket(blob_name, path_to_file, bucket_name="ppt-central-bucket"):
@@ -161,7 +161,7 @@ def train_model(
         verbose=verbose,
     )
 
-    create_loss_plot(platform=platform, history=history, fig_name=experiment_name)
+    create_metrics_plots(platform=platform, history=history, fig_name=experiment_name)
 
     return model
 

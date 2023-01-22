@@ -31,7 +31,7 @@ def run_cifar_vgg16():
 
 def run_cifar_vgg16_bn():
     trained_model = train_model(
-        experiment_name='cifar_vgg16',
+        experiment_name='cifar_vgg16_bn',
         platform="cloud",
         strategy="tpu",
         model_name="vgg16_bn",
