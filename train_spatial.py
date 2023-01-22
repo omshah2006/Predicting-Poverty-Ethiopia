@@ -53,6 +53,8 @@ def train_model(
     dataset,
     optimizer,
     lr_rate,
+    momentum,
+    weight_decay,
     num_classes,
     weights,
     use_custom_top,
@@ -105,7 +107,7 @@ def train_model(
     # Compile model
     with strategy.scope():
         if optimizer == "sgd":
-            opt = tf.keras.optimizers.SGD(learning_rate=lr_rate)
+            opt = tf.keras.optimizers.SGD(learning_rate=lr_rate, momentum=momentum, weight_decay=weight_decay)
         elif optimizer == "adam":
             opt = tf.keras.optimizers.Adam(learning_rate=lr_rate)
 
