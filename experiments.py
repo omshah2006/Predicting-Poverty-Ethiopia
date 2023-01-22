@@ -52,7 +52,7 @@ def run_cifar_vgg16_bn():
         loss_func="categorical_crossentropy",
         metrics=["accuracy"],
         steps_per_execution=32,
-        num_epochs=10,
+        num_epochs=100,
         train_steps=int(50000 / 64),
         val_steps=10000,
         verbose=2,
