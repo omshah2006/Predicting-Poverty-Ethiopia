@@ -251,7 +251,7 @@ def vgg16_bn(
 
         x = layers.Flatten(name="flatten")(base_model.layers[-1].output)
         x = layers.Dense(
-            512, kernel_regularizer=_gen_l2_regularizer(use_l2_regularizer), name="fc1"
+            256, kernel_regularizer=_gen_l2_regularizer(use_l2_regularizer), name="fc1"
         )(x)
         x = layers.Activation("relu")(x)
         x = layers.Dropout(0.5)(x)
