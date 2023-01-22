@@ -36,7 +36,7 @@ def run_cifar_vgg16_bn():
         strategy="tpu",
         model_name="sample_vgg",
         dataset="cifar",
-        optimizer="sgd",
+        optimizer="adam",
         lr_rate=0.1,
         momentum=0.9,
         weight_decay=1e-4,
