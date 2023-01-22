@@ -57,6 +57,7 @@ def train_model(
     weights,
     use_custom_top,
     input_shape,
+    fl_activation,
     batch_size,
     use_l2_regularizer,
     batch_norm_decay,
@@ -111,7 +112,7 @@ def train_model(
         # Instantiate model
         if model_name == "vgg16":
             model = vgg16.vgg16(
-                num_classes, weights, use_custom_top, input_shape, batch_size
+                num_classes, weights, use_custom_top, input_shape, fl_activation, batch_size
             )
         elif model_name == "vgg16_bn":
             model = vgg16_bn.vgg16_bn(

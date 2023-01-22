@@ -14,6 +14,7 @@ def run_cifar_vgg16():
         weights="imagenet",
         use_custom_top=True,
         input_shape=(32, 32, 3),
+        fl_activation="relu",
         batch_size=512,
         use_l2_regularizer=True,
         batch_norm_decay=0.9,
@@ -41,6 +42,7 @@ def run_cifar_vgg16_bn():
         weights="imagenet",
         use_custom_top=True,
         input_shape=(32, 32, 3),
+        fl_activation="relu",
         batch_size=512,
         use_l2_regularizer=True,
         batch_norm_decay=0.9,
@@ -68,6 +70,7 @@ def run_cifar_sample_cnn():
         weights="imagenet",
         use_custom_top=True,
         input_shape=(224, 224, 3),
+        fl_activation="relu",
         batch_size=512,
         use_l2_regularizer=True,
         batch_norm_decay=0.9,
@@ -94,6 +97,7 @@ def run_local():
         weights="imagenet",
         use_custom_top=True,
         input_shape=(32, 32, 3),
+        fl_activation="relu",
         batch_size=64,
         use_l2_regularizer=True,
         batch_norm_decay=0.9,
@@ -109,4 +113,4 @@ def run_local():
 
 
 if __name__ == '__main__':
-    run_cifar_vgg16_bn()
+    run_cifar_vgg16()

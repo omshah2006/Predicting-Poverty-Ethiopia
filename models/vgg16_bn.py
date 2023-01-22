@@ -18,6 +18,7 @@ def vgg16_bn(
     weights='imagenet',
     use_custom_top=True,
     input_shape=(224, 224, 3),
+    fl_activation="linear",
     batch_size=None,
     use_l2_regularizer=True,
     batch_norm_decay=0.9,
@@ -265,7 +266,7 @@ def vgg16_bn(
             name="fc1000",
         )(x)
 
-        x = layers.Activation("linear", dtype="float32")(x)
+        x = layers.Activation(fl_activation, dtype="float32")(x)
 
         model = tf.keras.models.Model(img_input, x, name="vgg16_full")
     else:
