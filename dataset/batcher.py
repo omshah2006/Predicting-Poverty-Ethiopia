@@ -87,7 +87,7 @@ class Batcher:
         def normalize_resize(image, label):
             image = tf.cast(image, tf.float32)
             image = tf.divide(image, 255)
-            image = tf.image.resize(image, (32, 32))
+            image = tf.image.resize(image, (224, 224))
             label = tf.one_hot(label, 10)
             return image, label
 

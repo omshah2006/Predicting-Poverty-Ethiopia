@@ -41,7 +41,7 @@ def run_cifar_vgg16_bn():
         num_classes=10,
         weights="imagenet",
         use_custom_top=True,
-        input_shape=(32, 32, 3),
+        input_shape=(224, 224, 3),
         fl_activation="relu",
         batch_size=64,
         use_l2_regularizer=True,
