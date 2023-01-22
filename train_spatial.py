@@ -22,7 +22,7 @@ def use_distributed_strategy(strategy_type):
     return strategy
 
 
-def create_metrics_plots(platform, history, fig_name):
+def create_metrics_plots(platform, metrics, history, fig_name):
     plt.plot(history.history["loss"])
     plt.plot(history.history["val_loss"])
     plt.title("model loss")
@@ -33,8 +33,10 @@ def create_metrics_plots(platform, history, fig_name):
 
     plt.clf()
 
-    plt.plot(history.history["accuracy"])
-    plt.plot(history.history["val_accuracy"])
+    # plt.plot(history.history["accuracy"])
+    # plt.plot(history.history["val_accuracy"])
+    plt.plot(history.history["root_mean_squared_error"])
+    plt.plot(history.history["val_root_mean_squared_error"])
     plt.title("model accuracy")
     plt.ylabel("accuracy")
     plt.xlabel("epoch")
@@ -96,7 +98,7 @@ def train_model(
 
     if dataset == 'imagery':
         train_batcher = batcher.Batcher(
-            image_shape=input_shape, bucket=bucket, batch_size=batch_size, shuffle=True, split="train"
+            image_shape=input_shape, bucket=bucket, batch_size=batch_size, shuffle=False, split="train"
         ).get_dataset()
         val_batcher = batcher.Batcher(
             image_shape=input_shape, bucket=bucket, batch_size=batch_size, shuffle=False, split="val"

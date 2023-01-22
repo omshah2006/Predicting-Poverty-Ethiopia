@@ -2,6 +2,7 @@ import os
 import tensorflow as tf
 import numpy as np
 import tensorflow_datasets as tfds
+import random
 
 
 SIZES = {
@@ -25,6 +26,7 @@ def get_tfrecord_paths(split, bucket=True):
         tfrecords = tf.io.gfile.glob(glob)
     else:
         tfrecords = sorted([f for f in os.listdir(LSMS_TFRECORDS_DIR) if not f.startswith('.')])
+        random.shuffle(tfrecords)
         for i, file in enumerate(tfrecords):
             tfrecords[i] = os.path.join('data/lsms_tfrecords', file)
 

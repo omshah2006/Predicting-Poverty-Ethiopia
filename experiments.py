@@ -95,7 +95,7 @@ def run_imagery_sample_vgg():
         strategy="tpu",
         model_name="sample_vgg",
         dataset="imagery",
-        optimizer="adam",
+        optimizer="sgd",
         lr_rate=1e-3,
         momentum=0.9,
         weight_decay=1e-4,
