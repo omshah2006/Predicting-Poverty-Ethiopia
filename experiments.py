@@ -44,7 +44,7 @@ def run_cifar_vgg16_bn():
         weights="imagenet",
         use_custom_top=True,
         input_shape=(224, 224, 3),
-        fl_activation="relu",
+        fl_activation="softmax",
         batch_size=64,
         use_l2_regularizer=True,
         batch_norm_decay=0.9,
