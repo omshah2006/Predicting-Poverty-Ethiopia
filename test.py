@@ -1,6 +1,7 @@
 import time
 import numpy as np
 import matplotlib.pyplot as plt
+import tensorflow as tf
 from keras.utils import np_utils
 from keras.datasets import cifar10
 from keras.models import Sequential
@@ -48,7 +49,7 @@ def mdlTrain(train_feature, train_label, test_feature, test_label):
     model = Sequential()
 
     model.add(Conv2D(filters=32, kernel_size=(3, 3), padding='same', kernel_initializer='he_uniform',
-                     input_shape=(32, 32, 3)))
+                     input_shape=(224, 224, 3)))
     model.add(BatchNormalization())
     model.add(
         Conv2D(filters=32, kernel_size=(3, 3), padding='same', kernel_initializer='he_uniform', activation='relu'))
@@ -84,7 +85,7 @@ def mdlTrain(train_feature, train_label, test_feature, test_label):
     # training definition
     batch_num = 64
     epoch_num = 200
-    opt = Adam(learning_rate=0.00001)
+    opt = Adam()
     datagen = ImageDataGenerator(rotation_range=15, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True)
     datagen.fit(train_feature)
     # checkpoint = ModelCheckpoint("cifar10_best.h5", monitor='val_accuracy', verbose=0, save_best_only=True, mode='max')
@@ -110,8 +111,8 @@ def mdlTrain(train_feature, train_label, test_feature, test_label):
 
 # data preprocessing
 # reshape
-train_feature_vector = train_feature.reshape(len(train_feature), 32, 32, 3).astype('float32')
-test_feature_vector = test_feature.reshape(len(test_feature), 32, 32, 3).astype('float32')
+train_feature_vector = np.resize(train_feature, (50000, 224, 224, 3))
+test_feature_vector = np.resize(test_feature, (10000, 224, 224, 3))
 
 # feature normalization
 # z-score
