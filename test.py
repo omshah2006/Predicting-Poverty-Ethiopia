@@ -165,10 +165,9 @@ if __name__ == '__main__':
                                         decay=1e-6, momentum=momentum, nesterov=True)
     model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
 
-    print(model.summary())
 
-    model.fit_generator(datagen.flow(train_images, train_labels,
-                                     batch_size=batch_size), epochs=training_epochs, verbose=2, callbacks=[reduce_lr],
-                        steps_per_epoch=train_images.shape[0] // batch_size, validation_data=(test_images, test_labels))
+    model.fit(x=train_images, y=train_labels, batch_size=batch_size, epochs=training_epochs, verbose=2,
+              callbacks=[reduce_lr],
+              steps_per_epoch=train_images.shape[0] // batch_size, validation_data=(test_images, test_labels))
 
     model.save_weights('cifar10vgg_custom.h5')

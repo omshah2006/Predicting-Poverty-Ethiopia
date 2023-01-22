@@ -34,7 +34,7 @@ def run_cifar_vgg16_bn():
         experiment_name='cifar_vgg16_bn_100_epoch_run',
         platform="cloud",
         strategy="tpu",
-        model_name="vgg16_bn",
+        model_name="sample_vgg",
         dataset="cifar",
         optimizer="sgd",
         lr_rate=0.1,

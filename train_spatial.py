@@ -130,6 +130,8 @@ def train_model(
             )
         elif model_name == "sample_cnn":
             model = sample_cnn.sample_cnn(num_classes, input_shape)
+        elif model_name == "sample_vgg":
+            model = sample_cnn.sample_vgg((num_classes, input_shape))
         else:
             raise ValueError("Model not found.")
 
