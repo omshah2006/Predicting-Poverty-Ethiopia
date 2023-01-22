@@ -4,6 +4,7 @@ import numpy as np
 import tensorflow_datasets as tfds
 import random
 
+random.seed(4)
 
 SIZES = {
     'LSMS-ethiopia-2018': {'train': 4559, 'val': 1302, 'test': 652, 'all': 6513}

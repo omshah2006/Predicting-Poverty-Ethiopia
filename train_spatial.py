@@ -22,7 +22,7 @@ def use_distributed_strategy(strategy_type):
     return strategy
 
 
-def create_metrics_plots(platform, metrics, history, fig_name):
+def create_metrics_plots(platform, history, fig_name):
     plt.plot(history.history["loss"])
     plt.plot(history.history["val_loss"])
     plt.title("model loss")
