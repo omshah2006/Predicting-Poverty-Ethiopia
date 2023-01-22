@@ -74,7 +74,7 @@ def run_cifar_sample_vgg():
         weights=None,
         use_custom_top=True,
         input_shape=(224, 224, 3),
-        fl_activation="linear",
+        fl_activation="softmax",
         batch_size=128,
         use_l2_regularizer=True,
         batch_norm_decay=0.9,
@@ -83,8 +83,8 @@ def run_cifar_sample_vgg():
         metrics=["accuracy"],
         steps_per_execution=32,
         num_epochs=10,
-        train_steps=int(50000 / 128),
-        val_steps=10000,
+        train_steps=int(4000 / 128),
+        val_steps=1000,
         verbose=2,
     )
 
@@ -178,4 +178,4 @@ def run_local():
 
 
 if __name__ == '__main__':
-    run_imagery_sample_vgg()
+    run_cifar_sample_vgg()
