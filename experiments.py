@@ -32,7 +32,7 @@ def run_cifar_sample_cnn():
         experiment_name='cifar_sample_cnn',
         platform="cloud",
         strategy="tpu",
-        model_name="vgg16",
+        model_name="sample_cnn",
         dataset="cifar",
         optimizer="adam",
         lr_rate=0.00001,
