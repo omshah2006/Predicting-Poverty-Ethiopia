@@ -107,7 +107,7 @@ def train_model(
     # Compile model
     with strategy.scope():
         if optimizer == "sgd":
-            opt = tf.keras.optimizers.SGD(learning_rate=lr_rate, momentum=momentum, weight_decay=weight_decay)
+            opt = tf.keras.optimizers.SGD(learning_rate=lr_rate, momentum=momentum, nesterov=True)
         elif optimizer == "adam":
             opt = tf.keras.optimizers.Adam(learning_rate=lr_rate)
 
@@ -152,6 +152,11 @@ def train_model(
             steps_per_execution=steps_per_execution,
         )
 
+    def lr_scheduler(epoch):
+        return lr_rate * (0.5 ** (epoch // 20))
+
+    reduce_lr = tf.keras.callbacks.LearningRateScheduler(lr_scheduler)
+
     # Train model
     history = model.fit(
         x=train_batcher,
@@ -160,6 +165,7 @@ def train_model(
         validation_data=val_batcher,
         validation_steps=val_steps,
         # batch_size=batch_num,
+        callbacks=[reduce_lr],
         verbose=verbose,
     )
 

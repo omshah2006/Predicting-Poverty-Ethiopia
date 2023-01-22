@@ -162,8 +162,10 @@ if __name__ == '__main__':
     model = VGG16Model()
 
     optimizer = tf.keras.optimizers.SGD(learning_rate=learning_rate,
-                                        weight_decay=1e-6, momentum=momentum, nesterov=True)
+                                        decay=1e-6, momentum=momentum, nesterov=True)
     model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
+
+    print(model.summary())
 
     model.fit_generator(datagen.flow(train_images, train_labels,
                                      batch_size=batch_size), epochs=training_epochs, verbose=2, callbacks=[reduce_lr],

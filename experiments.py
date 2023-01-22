@@ -37,7 +37,7 @@ def run_cifar_vgg16_bn():
         model_name="vgg16_bn",
         dataset="cifar",
         optimizer="sgd",
-        lr_rate=0.001,
+        lr_rate=0.1,
         momentum=0.9,
         weight_decay=1e-4,
         num_classes=10,
@@ -53,7 +53,7 @@ def run_cifar_vgg16_bn():
         metrics=["accuracy"],
         steps_per_execution=32,
         num_epochs=100,
-        train_steps=int(50000 / 64),
+        train_steps=int(50000 / 128),
         val_steps=10000,
         verbose=2,
     )
