@@ -120,6 +120,7 @@ def train_model(
                 weights,
                 use_custom_top,
                 input_shape,
+                fl_activation,
                 batch_size,
                 use_l2_regularizer,
                 batch_norm_decay,
