@@ -164,8 +164,7 @@ if __name__ == '__main__':
 
     model = VGG16Model()
 
-    optimizer = tf.keras.optimizers.SGD(learning_rate=learning_rate,
-                                        decay=1e-6, momentum=momentum, nesterov=True)
+    optimizer = tf.keras.optimizers.SGD(learning_rate=learning_rate, momentum=momentum, nesterov=True)
     model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
 
 
