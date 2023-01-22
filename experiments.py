@@ -39,7 +39,7 @@ def run_cifar_sample_cnn():
         num_classes=10,
         weights="imagenet",
         use_custom_top=True,
-        input_shape=(32, 32, 3),
+        input_shape=(224, 224, 3),
         batch_size=512,
         use_l2_regularizer=True,
         batch_norm_decay=0.9,
