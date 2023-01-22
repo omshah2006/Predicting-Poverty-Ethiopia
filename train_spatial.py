@@ -29,10 +29,19 @@ def create_metrics_plots(platform, history, fig_name):
     plt.ylabel("loss")
     plt.xlabel("epoch")
     plt.legend(["train", "val"], loc="upper left")
-    plt.savefig("models/plots/" + fig_name)
+    plt.savefig("models/plots/" + fig_name + "loss_plot")
+
+    plt.plot(history.history["accuracy"])
+    plt.plot(history.history["val_accuracy"])
+    plt.title("model accuracy")
+    plt.ylabel("accuracy")
+    plt.xlabel("epoch")
+    plt.legend(["train", "val"], loc="upper left")
+    plt.savefig("models/plots/" + fig_name + "accuracy_plot")
 
     if platform == "cloud":
-        upload_to_bucket(fig_name, "models/plots/" + fig_name + ".png")
+        upload_to_bucket(fig_name + "loss_plot", "models/plots/" + fig_name + "loss_plot" + ".png")
+        upload_to_bucket(fig_name + "accuracy_plot", "models/plots/" + fig_name + "accuracy_plot" + ".png")
 
 
 def upload_to_bucket(blob_name, path_to_file, bucket_name="ppt-central-bucket"):
@@ -134,16 +143,6 @@ def train_model(
             model = sample_cnn.sample_vgg(num_classes, input_shape)
         else:
             raise ValueError("Model not found.")
-
-        # Build your model here
-        # vgg_model = vgg16.VGG16(
-        #     include_imagenet_top=False,
-        #     weights="imagenet",
-        #     input_shape=(224, 224, 3),
-        #     pooling="max",
-        #     classes=1,
-        #     classifier_activation="linear",
-        # )
 
         print(model.summary())
 
