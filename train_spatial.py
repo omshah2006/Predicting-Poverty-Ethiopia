@@ -107,7 +107,7 @@ def train_model(
         if optimizer == "sgd":
             opt = tf.keras.optimizers.SGD(learning_rate=lr_rate)
         elif optimizer == "adam":
-            opt = tf.keras.optimizers.Adam()
+            opt = tf.keras.optimizers.Adam(learning_rate=lr_rate)
 
         # Instantiate model
         if model_name == "vgg16":
