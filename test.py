@@ -24,6 +24,9 @@ def load_images():
     train_images = train_images.astype(np.float32)
     test_images = test_images.astype(np.float32)
 
+    train_images = tf.image.resize(train_images, [224, 224], method="nearest")
+    test_images = tf.image.resize(test_images, [224, 224], method="nearest")
+
     (train_images, test_images) = normalization(train_images, test_images)
 
     train_labels = to_categorical(train_labels, 10)
