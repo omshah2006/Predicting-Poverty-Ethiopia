@@ -43,7 +43,7 @@ def run_cifar_vgg16_bn():
         use_custom_top=True,
         input_shape=(32, 32, 3),
         fl_activation="relu",
-        batch_size=256,
+        batch_size=128,
         use_l2_regularizer=True,
         batch_norm_decay=0.9,
         batch_norm_epsilon=1e-5,
@@ -51,7 +51,7 @@ def run_cifar_vgg16_bn():
         metrics=["accuracy"],
         steps_per_execution=32,
         num_epochs=10,
-        train_steps=int(50000 / 256),
+        train_steps=int(50000 / 128),
         val_steps=10000,
         verbose=2,
     )
