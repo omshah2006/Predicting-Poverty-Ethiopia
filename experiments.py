@@ -43,7 +43,7 @@ def run_cifar_vgg16_bn():
         use_custom_top=True,
         input_shape=(32, 32, 3),
         fl_activation="relu",
-        batch_size=128,
+        batch_size=64,
         use_l2_regularizer=True,
         batch_norm_decay=0.9,
         batch_norm_epsilon=1e-5,
