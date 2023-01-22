@@ -86,8 +86,8 @@ def mdlTrain(train_feature, train_label, test_feature, test_label):
     batch_num = 64
     epoch_num = 200
     opt = Adam()
-    datagen = ImageDataGenerator(rotation_range=15, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True)
-    datagen.fit(train_feature)
+    # datagen = ImageDataGenerator(rotation_range=15, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True)
+    # datagen.fit(train_feature)
     # checkpoint = ModelCheckpoint("cifar10_best.h5", monitor='val_accuracy', verbose=0, save_best_only=True, mode='max')
     # csv_logger = CSVLogger('training.csv')
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
