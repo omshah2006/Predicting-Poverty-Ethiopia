@@ -43,7 +43,8 @@ def get_tfrecord_paths(split, bucket=True):
 
 
 class Batcher:
-    def __init__(self, bucket=True, num_records=None, buffer_size=5000, batch_size=512, shuffle=True, split='all'):
+    def __init__(self, image_shape, bucket=True, num_records=None, buffer_size=5000, batch_size=512, shuffle=True, split='all'):
+        self.image_shape = image_shape
         self.tfrecords_paths = get_tfrecord_paths(split=split, bucket=bucket)
         self.num_records = num_records
         self.bands = ['BLUE', 'GREEN', 'RED']
@@ -63,7 +64,7 @@ class Batcher:
 
         # data preprocessing
         # reshape
-        train_feature_vector = tf.image.resize(train_feature, [32, 32], method="nearest")
+        train_feature_vector = tf.image.resize(train_feature, [self.image_shape[0], self.image_shape[1]], method="nearest")
         test_feature_vector = tf.image.resize(test_feature, [32, 32], method="nearest")
 
         # feature normalization

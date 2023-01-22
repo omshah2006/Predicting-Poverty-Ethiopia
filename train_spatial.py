@@ -94,13 +94,13 @@ def train_model(
 
     if dataset == 'imagery':
         train_batcher = batcher.Batcher(
-            bucket=bucket, batch_size=batch_size, shuffle=True, split="train"
+            image_shape=input_shape, bucket=bucket, batch_size=batch_size, shuffle=True, split="train"
         ).get_dataset()
         val_batcher = batcher.Batcher(
-            bucket=bucket, batch_size=batch_size, shuffle=False, split="val"
+            image_shape=input_shape, bucket=bucket, batch_size=batch_size, shuffle=False, split="val"
         ).get_dataset()
     elif dataset == 'cifar':
-        train_batcher, val_batcher = batcher.Batcher(bucket=bucket, batch_size=batch_size).create_cifar_dataset_test()
+        train_batcher, val_batcher = batcher.Batcher(image_shape=input_shape, bucket=bucket, batch_size=batch_size).create_cifar_dataset_test()
     else:
         raise ValueError("Dataset must be either 'imagery' or 'cifar'.")
 
