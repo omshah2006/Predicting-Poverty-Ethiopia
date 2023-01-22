@@ -61,7 +61,7 @@ def run_cifar_vgg16_bn():
 
 def run_cifar_sample_vgg():
     trained_model = train_model(
-        experiment_name='cifar_vgg16_bn_100_epoch_run',
+        experiment_name='cifar_sample_vgg_10_epoch_run',
         platform="cloud",
         strategy="tpu",
         model_name="sample_vgg",

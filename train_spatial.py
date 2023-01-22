@@ -31,6 +31,8 @@ def create_metrics_plots(platform, history, fig_name):
     plt.legend(["train", "val"], loc="upper left")
     plt.savefig("models/plots/" + fig_name + "loss_plot")
 
+    plt.clf()
+
     plt.plot(history.history["accuracy"])
     plt.plot(history.history["val_accuracy"])
     plt.title("model accuracy")
