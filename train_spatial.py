@@ -33,10 +33,10 @@ def create_metrics_plots(platform, history, fig_name):
 
     plt.clf()
 
-    # plt.plot(history.history["accuracy"])
-    # plt.plot(history.history["val_accuracy"])
-    plt.plot(history.history["root_mean_squared_error"])
-    plt.plot(history.history["val_root_mean_squared_error"])
+    plt.plot(history.history["accuracy"])
+    plt.plot(history.history["val_accuracy"])
+    # plt.plot(history.history["root_mean_squared_error"])
+    # plt.plot(history.history["val_root_mean_squared_error"])
     plt.title("model accuracy")
     plt.ylabel("accuracy")
     plt.xlabel("epoch")

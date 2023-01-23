@@ -25,8 +25,8 @@ def run_cifar_vgg16():
         metrics=["accuracy"],
         steps_per_execution=32,
         num_epochs=10,
-        train_steps=int(50000 / 128),
-        val_steps=10000,
+        train_steps=int(500 / 128),
+        val_steps=100,
         verbose=2,
     )
 
