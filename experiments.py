@@ -90,4 +90,4 @@ def run_local():
 
 
 if __name__ == '__main__':
-    run_imagery_vgg16()
+    run_cifar_vgg16()
