@@ -178,7 +178,7 @@ def train_model(
 
     # Save model
     filename = experiment_name
-    model.save('/saved_models/' + filename + ".h5")
+    model.save('/saved_models/' + filename)
     upload_to_bucket(filename, '/saved_models/' + filename)
     del model
 
