@@ -101,7 +101,8 @@ def vgg16(
     if use_custom_top:
         # Set up trainable and non-trainable layers
         for layer in base_model.layers:
-            layer.trainable = False
+            if weights == "imagenet":
+                layer.trainable = False
 
         x = layers.Flatten(name="flatten")(base_model.layers[-1].output)
         x = layers.Dense(512, activation="relu", name="fc1")(x)

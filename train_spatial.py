@@ -176,6 +176,12 @@ def train_model(
 
     create_metrics_plots(platform=platform, history=history, fig_name=experiment_name)
 
+    # Save model
+    filename = experiment_name
+    model.save('/saved_models/' + filename + ".h5")
+    upload_to_bucket(filename, '/saved_models/' + filename)
+    del model
+
     return model
 
 
@@ -214,9 +220,3 @@ def train_model(
     # accuracy evaluation
     # accuracy = model.evaluate(test_batcher, test_batcher)
     # print("\n[RootMeanSquaredError] = ", accuracy["RootMeanSquaredError"])
-
-    # save model
-    # filename = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
-    # model.save('/saved_models/' + filename + ".h5")
-    # upload_to_bucket(filename, '/saved_models/' + filename)
-    # del model
