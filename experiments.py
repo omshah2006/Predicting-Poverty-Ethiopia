@@ -82,7 +82,7 @@ def run_local():
         loss_func="categorical_crossentropy",
         metrics=["accuracy"],
         steps_per_execution=None,
-        num_epochs=100,
+        num_epochs=10,
         train_steps=int(50000 / 64),
         val_steps=10000,
         verbose=2,
