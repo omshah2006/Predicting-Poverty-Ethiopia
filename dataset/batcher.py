@@ -10,7 +10,7 @@ SIZES = {
     'LSMS-ethiopia-2018': {'train': 4559, 'val': 1302, 'test': 652, 'all': 6513}
 }
 
-LSMS_TFRECORDS_DIR = 'data/lsms_tfrecords/'
+LSMS_TFRECORDS_DIR = '../data/lsms_tfrecords/'
 BUCKET = 'ppt-central-bucket'
 FOLDER = 'lsms_tfrecords'
 
@@ -46,7 +46,7 @@ def get_tfrecord_paths(split, bucket=True):
 
 
 class Batcher:
-    def __init__(self, image_shape, bucket=True, num_records=None, buffer_size=5000, batch_size=512, shuffle=True, split='all'):
+    def __init__(self, image_shape=(224, 224, 3), bucket=True, num_records=None, buffer_size=5000, batch_size=512, shuffle=True, split='all'):
         self.image_shape = image_shape
         self.tfrecords_paths = get_tfrecord_paths(split=split, bucket=bucket)
         self.num_records = num_records

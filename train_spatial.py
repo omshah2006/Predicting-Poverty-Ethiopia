@@ -186,33 +186,6 @@ def train_model(
 
 
 # if __name__ == '__main__':
-#
-#
-#     trained_model = train_model(
-#         experiment_name='test',
-#         platform="local",
-#         strategy="mirrored",
-#         model_name="vgg16_bn",
-#         dataset="cifar",
-#         optimizer="sgd",
-#         lr_rate=0.00001,
-#         num_classes=10,
-#         weights="imagenet",
-#         use_custom_top=True,
-#         input_shape=(224, 224, 3),
-#         batch_size=512,
-#         use_l2_regularizer=True,
-#         batch_norm_decay=0.9,
-#         batch_norm_epsilon=1e-5,
-#         loss_func="MeanSquaredError",
-#         metrics=["RootMeanSquaredError"],
-#         steps_per_execution=32,
-#         num_epochs=100,
-#         train_steps=int(4559 / 512),
-#         val_steps=1302,
-#         verbose=2,
-#     )
-
     # train model
 
     # test_batcher = batcher.Batcher(shuffle=False, split='test').get_dataset()
