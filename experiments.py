@@ -64,7 +64,7 @@ def run_cifar_sample_vgg():
         experiment_name='cifar_sample_vgg_10_epoch_224_224_run',
         platform="cloud",
         strategy="tpu",
-        model_name="sample_vgg",
+        model_name="vgg16",
         dataset="cifar",
         optimizer="adam",
         lr_rate=1e-3,

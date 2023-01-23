@@ -29,6 +29,8 @@ def vgg16(
         64, (3, 3), activation="relu", padding="same", name="block1_conv2"
     )(x)
     x = layers.MaxPooling2D((2, 2), strides=(2, 2), name="block1_pool")(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Dropout(0.25)(x)
 
     # Block 2
     x = layers.Conv2D(
@@ -38,6 +40,8 @@ def vgg16(
         128, (3, 3), activation="relu", padding="same", name="block2_conv2"
     )(x)
     x = layers.MaxPooling2D((2, 2), strides=(2, 2), name="block2_pool")(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Dropout(0.25)(x)
 
     # Block 3
     x = layers.Conv2D(
@@ -50,6 +54,8 @@ def vgg16(
         256, (3, 3), activation="relu", padding="same", name="block3_conv3"
     )(x)
     x = layers.MaxPooling2D((2, 2), strides=(2, 2), name="block3_pool")(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Dropout(0.25)(x)
 
     # Block 4
     x = layers.Conv2D(
@@ -62,6 +68,8 @@ def vgg16(
         512, (3, 3), activation="relu", padding="same", name="block4_conv3"
     )(x)
     x = layers.MaxPooling2D((2, 2), strides=(2, 2), name="block4_pool")(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Dropout(0.25)(x)
 
     # Block 5
     x = layers.Conv2D(
@@ -74,6 +82,8 @@ def vgg16(
         512, (3, 3), activation="relu", padding="same", name="block5_conv3"
     )(x)
     x = layers.MaxPooling2D((2, 2), strides=(2, 2), name="block5_pool")(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Dropout(0.25)(x)
 
     # Create model.
     base_model = tf.keras.Model(inputs, x, name="vgg16")
@@ -94,8 +104,9 @@ def vgg16(
             layer.trainable = False
 
         x = layers.Flatten(name="flatten")(base_model.layers[-1].output)
-        x = layers.Dense(4096, activation="relu", name="fc1")(x)
-        x = layers.Dense(4096, activation="relu", name="fc2")(x)
+        x = layers.Dense(512, activation="relu", name="fc1")(x)
+        # x = layers.Dense(4096, activation="relu", name="fc2")(x)
+        x = layers.Dropout(0.5)(x)
 
         x = layers.Dense(num_classes, activation=fl_activation, name="predictions")(x)
 
