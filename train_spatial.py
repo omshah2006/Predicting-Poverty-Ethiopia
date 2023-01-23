@@ -178,7 +178,8 @@ def train_model(
 
     # Save model
     filename = experiment_name
-    model.save('/saved_models/' + filename)
+    save_locally = tf.saved_model.SaveOptions(experimental_io_device='/job:localhost')
+    model.save('/saved_models/' + filename, options=save_locally)
     upload_to_bucket(filename, '/saved_models/' + filename)
     del model
 
