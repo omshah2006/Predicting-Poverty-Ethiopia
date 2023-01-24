@@ -35,7 +35,7 @@ def sample_cnn(num_classes, input_shape):
     return model
 
 
-def sample_vgg(num_classes, input_shape):
+def sample_vgg(num_classes, input_shape, fl_activation):
     model = tf.keras.Sequential()
 
     model.add(layers.Conv2D(64, (3, 3), activation='relu', padding='same', input_shape=input_shape))
