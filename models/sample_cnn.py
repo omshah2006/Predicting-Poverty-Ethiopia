@@ -74,6 +74,6 @@ def sample_vgg(num_classes, input_shape, fl_activation):
     model.add(layers.Flatten())
     model.add(layers.Dense(512, activation='relu'))
     model.add(layers.Dropout(0.5))
-    model.add(layers.Dense(num_classes, activation='softmax'))
+    model.add(layers.Dense(num_classes, activation=fl_activation))
 
     return model

@@ -32,7 +32,7 @@ def run_cifar_vgg16():
 
 def run_imagery_vgg16():
     trained_model = train_model(
-        experiment_name='cifar_sample_vgg_10_epoch_224_224_run',
+        experiment_name='imagery_sample_vgg_100_epoch_run',
         platform="cloud",
         strategy="tpu",
         model_name="sample_vgg",
