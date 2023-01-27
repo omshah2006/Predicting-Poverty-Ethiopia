@@ -10,7 +10,7 @@ SIZES = {
     'LSMS-ethiopia-2018': {'train': 4559, 'val': 1302, 'test': 652, 'all': 6513}
 }
 
-LSMS_TFRECORDS_DIR = '../data/lsms_tfrecords/'
+LSMS_TFRECORDS_DIR = 'data/lsms_tfrecords/'
 BUCKET = 'ppt-central-bucket'
 FOLDER = 'lsms_tfrecords'
 
@@ -121,7 +121,7 @@ class Batcher:
             band = (band - BAND_MEANS[key]) / BAND_STDS[key]
             inputs_list.append(band)
 
-        stacked = tf.stack(inputs_list, axis=0)
+        stacked = tf.stack(inputs_list, axis=2)
         # Convert from CHW to HWC
         stacked = tf.transpose(stacked, [1, 2, 0])
         # Standardize consumption
