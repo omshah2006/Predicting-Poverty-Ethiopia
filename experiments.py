@@ -6,7 +6,7 @@ def run_cifar_vgg16():
         experiment_name='cifar_sample_vgg_10_epoch_224_224_run',
         platform="cloud",
         strategy="tpu",
-        model_name="vgg16",
+        model_name="sample_vgg",
         dataset="cifar",
         optimizer="adam",
         lr_rate=1e-3,
@@ -25,8 +25,8 @@ def run_cifar_vgg16():
         metrics=["accuracy"],
         steps_per_execution=32,
         num_epochs=10,
-        train_steps=int(500 / 128),
-        val_steps=100,
+        train_steps=int(50000 / 128),
+        val_steps=10000,
         verbose=2,
     )
 
@@ -90,4 +90,4 @@ def run_local():
 
 
 if __name__ == '__main__':
-    run_local()
+    run_cifar_vgg16()
