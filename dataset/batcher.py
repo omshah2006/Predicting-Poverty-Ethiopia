@@ -92,30 +92,6 @@ class Batcher:
             image = tf.cast(image, tf.float32)
             image = tf.divide(image, 255)
             image = tf.image.resize(image, (self.image_shape[0], self.image_shape[1]))
-            print(label)
-
-            # if label == 'airplane':
-            #     label = 0
-            # elif label == 'automobile':
-            #     label = 1
-            # elif label == 'bird':
-            #     label = 2
-            # elif label == 'cat':
-            #     label = 3
-            # elif label == 'deer':
-            #     label = 4
-            # elif label == 'dog':
-            #     label = 5
-            # elif label == 'frog':
-            #     label = 6
-            # elif label == 'horse':
-            #     label = 7
-            # elif label == 'ship':
-            #     label = 8
-            # elif label == 'truck':
-            #     label = 9
-            # else:
-            #     label = 10
 
             # label = tf.one_hot(label, 10)
             return image, label

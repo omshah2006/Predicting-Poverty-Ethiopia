@@ -32,7 +32,7 @@ def run_cifar_vgg16():
 
 def run_cifar_vgg16_regression():
     trained_model = train_model(
-        experiment_name='cifar_sample_vgg_10_epoch_224_224_run',
+        experiment_name='cifar_sample_vgg_regression',
         platform="cloud",
         strategy="tpu",
         model_name="sample_vgg",
@@ -53,7 +53,7 @@ def run_cifar_vgg16_regression():
         loss_func="MeanSquaredError",
         metrics=["RootMeanSquaredError"],
         steps_per_execution=32,
-        num_epochs=2,
+        num_epochs=5,
         train_steps=int(50000 / 128),
         val_steps=10000,
         verbose=2,
