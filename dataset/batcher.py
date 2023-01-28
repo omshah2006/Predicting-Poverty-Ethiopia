@@ -123,7 +123,7 @@ class Batcher:
             band = (band - BAND_MEANS[key]) / BAND_STDS[key]
             inputs_list.append(band)
 
-        stacked = tf.stack(inputs_list, axis=2)
+        stacked = tf.stack(inputs_list, axis=0)
         # Convert from CHW to HWC
         stacked = tf.transpose(stacked, [1, 2, 0])
         # Standardize consumption
