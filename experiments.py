@@ -61,12 +61,12 @@ def run_cifar_vgg16_regression():
 
 def run_imagery_vgg16():
     trained_model = train_model(
-        experiment_name='imagery_sample_vgg_100_epoch_run',
+        experiment_name='imagery_sample_vgg_regression',
         platform="cloud",
         strategy="tpu",
         model_name="sample_vgg",
-        dataset="imagery",
-        optimizer="sgd",
+        dataset="cifar",
+        optimizer="adam",
         lr_rate=1e-3,
         momentum=0.9,
         weight_decay=1e-4,
@@ -82,7 +82,7 @@ def run_imagery_vgg16():
         loss_func="MeanSquaredError",
         metrics=["RootMeanSquaredError"],
         steps_per_execution=32,
-        num_epochs=100,
+        num_epochs=20,
         train_steps=int(4559 / 128),
         val_steps=1302,
         verbose=2,
