@@ -180,7 +180,7 @@ def train_model(
     filename = experiment_name + '.h5'
     save_locally = tf.saved_model.SaveOptions(experimental_io_device='/job:localhost')
     model.save('saved_models/' + filename, options=save_locally)
-    upload_to_bucket(filename, 'saved_models/' + filename)
+    upload_to_bucket('saved_models/' + filename, 'saved_models/' + filename)
     del model
 
     return model
