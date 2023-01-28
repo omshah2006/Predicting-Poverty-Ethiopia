@@ -65,7 +65,7 @@ def run_imagery_vgg16():
         platform="cloud",
         strategy="tpu",
         model_name="sample_vgg",
-        dataset="cifar",
+        dataset="imagery",
         optimizer="adam",
         lr_rate=1e-3,
         momentum=0.9,
