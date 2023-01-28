@@ -183,7 +183,7 @@ def train_model(
     upload_to_bucket('saved_models/' + filename, 'saved_models/' + filename)
     del model
 
-    return model
+    return None
 
 
 # if __name__ == '__main__':

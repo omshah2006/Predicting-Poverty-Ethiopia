@@ -10,7 +10,8 @@ SIZES = {
     'LSMS-ethiopia-2018': {'train': 4559, 'val': 1302, 'test': 652, 'all': 6513}
 }
 
-LSMS_TFRECORDS_DIR = 'data/lsms_tfrecords/'
+BASE_DIR = '..'
+LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/lsms_tfrecords/')
 BUCKET = 'ppt-central-bucket'
 FOLDER = 'lsms_tfrecords'
 

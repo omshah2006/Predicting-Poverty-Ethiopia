@@ -2,6 +2,7 @@
 *.idea
 *.tif
 *.dta
+*.h5
 *.npy
 *.pt
 *.pth
