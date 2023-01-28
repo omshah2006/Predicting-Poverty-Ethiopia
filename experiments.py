@@ -119,4 +119,4 @@ def run_local():
 
 
 if __name__ == '__main__':
-    run_cifar_vgg16_regression()
+    run_imagery_vgg16()
