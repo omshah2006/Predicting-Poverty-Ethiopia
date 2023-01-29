@@ -67,7 +67,7 @@ def run_imagery_vgg16():
         model_name="sample_vgg",
         dataset="imagery",
         optimizer="adam",
-        lr_rate=1e-3,
+        lr_rate=1e-2,
         momentum=0.9,
         weight_decay=1e-4,
         num_classes=1,
