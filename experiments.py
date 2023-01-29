@@ -61,10 +61,10 @@ def run_cifar_vgg16_regression():
 
 def run_imagery_vgg16():
     trained_model = train_model(
-        experiment_name='imagery_sample_vgg_regression',
+        experiment_name='imagery_sample_cnn_regression',
         platform="cloud",
         strategy="tpu",
-        model_name="sample_vgg",
+        model_name="sample_cnn",
         dataset="imagery",
         optimizer="adam",
         lr_rate=1e-3,
