@@ -30,7 +30,7 @@ def get_tfrecord_paths(split, bucket=True):
         tfrecords = sorted([f for f in os.listdir(LSMS_TFRECORDS_DIR) if not f.startswith('.')])
         random.shuffle(tfrecords)
         for i, file in enumerate(tfrecords):
-            tfrecords[i] = os.path.join('data/lsms_tfrecords', file)
+            tfrecords[i] = os.path.join(BASE_DIR, 'data/lsms_tfrecords', file)
 
     tfrecord_paths = []
     if split == 'all':
@@ -47,7 +47,7 @@ def get_tfrecord_paths(split, bucket=True):
 
 
 class Batcher:
-    def __init__(self, image_shape=(224, 224, 3), bucket=True, num_records=None, buffer_size=5000, batch_size=512, shuffle=True, split='all'):
+    def __init__(self, image_shape=(224, 224, 3), bucket=True, num_records=None, buffer_size=5000, batch_size=512, repeat=None, shuffle=True, split='all'):
         self.image_shape = image_shape
         self.tfrecords_paths = get_tfrecord_paths(split=split, bucket=bucket)
         self.num_records = num_records
@@ -58,6 +58,8 @@ class Batcher:
         self.buffer_size = buffer_size
         self.batch_size = batch_size
         self.shuffle = shuffle
+        self.repeat = repeat
+        self.split = split
 
     def create_cifar_dataset(self):
         # load cifar10 data
@@ -139,10 +141,10 @@ class Batcher:
         dataset = dataset.map(self.to_tuple, num_parallel_calls=tf.data.AUTOTUNE)
 
         if self.shuffle:
-            dataset = dataset.cache().repeat().shuffle(buffer_size=self.buffer_size).batch(self.batch_size)
+            dataset = dataset.cache().repeat(self.repeat).shuffle(buffer_size=self.buffer_size).batch(self.batch_size)
             dataset = dataset.prefetch(buffer_size=tf.data.AUTOTUNE)
         else:
-            dataset = dataset.cache().repeat().batch(self.batch_size)
+            dataset = dataset.cache().repeat(self.repeat).batch(self.batch_size)
             dataset = dataset.prefetch(buffer_size=tf.data.AUTOTUNE)
 
         return dataset
