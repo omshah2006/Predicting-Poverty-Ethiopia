@@ -51,7 +51,7 @@ class Batcher:
         self.image_shape = image_shape
         self.tfrecords_paths = get_tfrecord_paths(split=split, bucket=bucket)
         self.num_records = num_records
-        self.bands = ['BLUE', 'GREEN', 'RED']
+        self.bands = ['RED', 'GREEN', 'BLUE']
         self.scalar_keys = ['lat', 'lon', 'consumption']
         self.label = ['consumption']
         self.features = self.bands + self.scalar_keys + self.label
@@ -121,8 +121,9 @@ class Batcher:
         for key in self.bands:
             band = example.get(key)
             band = tf.reshape(band, [255, 255])[15:239, 15:239]
+            # band = tf.divide(band, 255)
             # Standardize band
-            band = (band - BAND_MEANS[key]) / BAND_STDS[key]
+            # band = (band - BAND_MEANS[key]) / BAND_STDS[key]
             inputs_list.append(band)
 
         stacked = tf.stack(inputs_list, axis=0)

@@ -33,7 +33,12 @@ def visualize_bands(img, band_names, bands_per_row=3):
     plots = []
     plot_names = []
     
+    BAND_MEANS = {'BLUE': 0.05720699718743952, 'GREEN': 0.09490949383988444, 'RED': 0.11647556706520566, 'NIR': 0.25043694995276194, 'SW_IR1': 0.2392968657712096, 'SW_IR2': 0.17881930908670116, 'TEMP': 309.4823962960872, 'avg_rad': 1.8277193893627437}
+    BAND_STDS = {'BLUE': 0.02379879403788589, 'GREEN': 0.03264212296594092, 'RED': 0.050468921297598834, 'NIR': 0.04951648377311826, 'SW_IR1': 0.07332469136800321, 'SW_IR2': 0.07090649886221509, 'TEMP': 6.000001012494749, 'avg_rad': 4.328436715534132}
+
+    
     r, g, b = bands['RED'], bands['GREEN'], bands['BLUE']
+#     r, g, b = ((bands['RED'] - BAND_MEANS['RED']) / BAND_STDS['RED']) , ((bands['GREEN'] - BAND_MEANS['GREEN']) / BAND_STDS['GREEN']), ((bands['BLUE'] - BAND_MEANS['BLUE']) / BAND_STDS['BLUE'])
     rgb = np.stack([r, g, b], axis=2)
     plots.append(rgb)
     plot_names.append('RGB')
