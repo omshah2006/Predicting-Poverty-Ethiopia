@@ -12,7 +12,7 @@ def sample_cnn(num_classes, input_shape, fl_activation):
     # model.add(layers.BatchNormalization())
     # model.add(layers.MaxPooling2D())
     # model.add(layers.Dropout(0.2))
-    model.add(layers.Conv2D(64, (3, 3), activation='gelu', padding='same', kernel_initializer='he_uniform', input_shape=input_shape))
+    model.add(layers.Conv2D(64, (3, 3), padding='same', kernel_initializer='he_uniform', input_shape=input_shape))
     model.add(layers.BatchNormalization())
     model.add(layers.Conv2D(64, (3, 3), activation='gelu', padding='same', kernel_initializer='he_uniform'))
     model.add(layers.BatchNormalization())
