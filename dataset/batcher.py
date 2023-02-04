@@ -51,7 +51,7 @@ class Batcher:
         self.image_shape = image_shape
         self.tfrecords_paths = get_tfrecord_paths(split=split, bucket=bucket)
         self.num_records = num_records
-        self.bands = ['RED', 'GREEN', 'BLUE']
+        self.bands = ['RED', 'GREEN', 'BLUE', 'avg_rad']
         self.scalar_keys = ['lat', 'lon', 'consumption']
         self.label = ['consumption']
         self.features = self.bands + self.scalar_keys + self.label
