@@ -65,7 +65,7 @@ def run_imagery_vgg16():
         experiment_name='imagery_sample_vgg_regression',
         platform="cloud",
         strategy="tpu",
-        model_name="sample_cnn",
+        model_name="sample_vgg",
         dataset="imagery",
         optimizer="adam",
         lr_rate=1e-3,

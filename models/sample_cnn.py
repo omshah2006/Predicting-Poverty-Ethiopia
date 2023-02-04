@@ -44,7 +44,13 @@ def sample_cnn(num_classes, input_shape, fl_activation):
 def sample_vgg(num_classes, input_shape, fl_activation):
     model = tf.keras.Sequential()
 
-    model.add(layers.Conv2D(64, (3, 3), activation='gelu', padding='same', input_shape=input_shape))
+    model.add(layers.Conv2D(32, (3, 3), activation='gelu', padding='same', input_shape=input_shape))
+    model.add(layers.Conv2D(32, (3, 3), activation='gelu', padding='same'))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    model.add(layers.BatchNormalization())
+    model.add(layers.Dropout(0.25))
+
+    model.add(layers.Conv2D(64, (3, 3), activation='gelu', padding='same'))
     model.add(layers.Conv2D(64, (3, 3), activation='gelu', padding='same'))
     model.add(layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
     model.add(layers.BatchNormalization())
