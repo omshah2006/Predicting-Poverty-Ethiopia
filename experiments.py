@@ -1,3 +1,4 @@
+import os
 from train_spatial import train_model
 
 # Experiment name: 'dataset_model'
@@ -119,4 +120,9 @@ def run_local():
 
 
 if __name__ == '__main__':
+    # Export TPU_NAME before run
+    export_tpu_name = "export TPU_NAME=local"
+    os.system(export_tpu_name)
+
+    # Run experiment
     run_imagery_vgg16()
