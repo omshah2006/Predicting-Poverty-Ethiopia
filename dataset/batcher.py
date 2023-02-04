@@ -123,7 +123,7 @@ class Batcher:
             band = tf.reshape(band, [255, 255])[15:239, 15:239]
             # band = tf.divide(band, 255)
             # Standardize band
-            # band = (band - BAND_MEANS[key]) / BAND_STDS[key]
+            band = (band - BAND_MEANS[key]) / BAND_STDS[key]
             inputs_list.append(band)
 
         stacked = tf.stack(inputs_list, axis=0)
