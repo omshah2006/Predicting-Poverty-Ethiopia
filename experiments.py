@@ -74,7 +74,7 @@ def run_imagery_vgg16():
         num_classes=1,
         weights=None,
         use_custom_top=True,
-        input_shape=(224, 224, 2),
+        input_shape=(224, 224, 8),
         fl_activation="linear",
         batch_size=128,
         use_l2_regularizer=True,
