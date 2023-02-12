@@ -14,6 +14,8 @@
 data/cnn_images*
 data/lsms_tfrecords*
 data/lsms_tfrecords_raw*
+data/nga_lsms_tfrecords_raw*
+data/nga_lsms_tfrecords*
 data/countries/ethiopia_2015*
 data/legacy_data
 data/countries/bundled_data
