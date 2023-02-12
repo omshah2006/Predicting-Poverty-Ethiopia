@@ -14,7 +14,7 @@ SIZES = {
 BASE_DIR = ''
 LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/lsms_tfrecords_new/')
 BUCKET = 'ppt-central-bucket'
-FOLDER = 'lsms_tfrecords'
+FOLDER = 'lsms_tfrecords_new'
 
 # CONSUMPTION_MEAN = 4.64419991542738
 # CONSUMPTION_STD = 4.717155116197405
