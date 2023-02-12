@@ -54,7 +54,7 @@ class Batcher:
         self.image_shape = image_shape
         self.tfrecords_paths = get_tfrecord_paths(country_year=country_year, split=split, bucket=bucket)
         self.num_records = num_records
-        self.bands = ['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'TEMP_DELTA']
+        self.bands = ['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP']
         # self.bands = ['TEMP']
         self.scalar_keys = ['lat', 'lon', 'consumption']
         self.label = ['consumption']
