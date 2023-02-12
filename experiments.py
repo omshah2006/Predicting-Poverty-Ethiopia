@@ -103,7 +103,7 @@ def run_local():
         num_classes=1,
         weights=None,
         use_custom_top=True,
-        input_shape=(224, 224, 8),
+        input_shape=(224, 224, 9),
         fl_activation="linear",
         batch_size=64,
         use_l2_regularizer=True,
