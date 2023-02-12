@@ -7,12 +7,16 @@
 *.pt
 *.pth
 *.caffemodel
+*.tfrecord
+*.png
 *.DS_Store
 
 data/cnn_images*
 data/lsms_tfrecords*
 data/lsms_tfrecords_raw*
 data/countries/ethiopia_2015*
+data/legacy_data
+data/countries/bundled_data
 
 
 # Byte-compiled / optimized / DLL files

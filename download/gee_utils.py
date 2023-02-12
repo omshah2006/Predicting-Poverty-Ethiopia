@@ -122,7 +122,25 @@ def add_nl_band(img):
         .filter(ee.Filter.date("2018-01-01", "2018-12-31"))
         .median()
     )
-    img = img.addBands(nighttime_lights_col.select("avg_rad"))
+    img = img.addBands(nighttime_lights_col.select("avg_rad").rename("VIIRS"))
+
+    return img
+
+
+def add_deltatemp_band(img):
+    l8_temp_col = (
+        ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
+        .filter(ee.Filter.date("2017-01-01", "2018-12-31"))
+        .median()
+    )
+
+    l5_temp_col = (
+        ee.ImageCollection("LANDSAT/LT05/C02/T1_L2")
+        .filter(ee.Filter.date("1985-01-01", "1986-12-31"))
+        .median()
+    )
+
+    img = img.addBands(l8_temp_col.select("ST_B10").subtract(l5_temp_col.select("ST_B6")).rename("DELTA_TEMP"))
 
     return img
 

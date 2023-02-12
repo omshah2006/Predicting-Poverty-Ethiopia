@@ -3,6 +3,7 @@ import tensorflow as tf
 import numpy as np
 import tensorflow_datasets as tfds
 import random
+import dataset.dataset_constants as dc
 
 random.seed(4)
 
@@ -10,19 +11,20 @@ SIZES = {
     'LSMS-ethiopia-2018': {'train': 4559, 'val': 1302, 'test': 652, 'all': 6513}
 }
 
-BASE_DIR = '..'
-LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/lsms_tfrecords/')
+BASE_DIR = ''
+LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/lsms_tfrecords_new/')
 BUCKET = 'ppt-central-bucket'
 FOLDER = 'lsms_tfrecords'
 
-CONSUMPTION_MEAN = 4.64419991542738
-CONSUMPTION_STD = 4.717155116197405
+# CONSUMPTION_MEAN = 4.64419991542738
+# CONSUMPTION_STD = 4.717155116197405
+#
+# BAND_MEANS = {'BLUE': 0.05720699718743952, 'GREEN': 0.09490949383988444, 'RED': 0.11647556706520566, 'NIR': 0.25043694995276194, 'SW_IR1': 0.2392968657712096, 'SW_IR2': 0.17881930908670116, 'TEMP': 309.4823962960872, 'avg_rad': 1.8277193893627437}
+# BAND_STDS = {'BLUE': 0.02379879403788589, 'GREEN': 0.03264212296594092, 'RED': 0.050468921297598834, 'NIR': 0.04951648377311826, 'SW_IR1': 0.07332469136800321, 'SW_IR2': 0.07090649886221509, 'TEMP': 6.000001012494749, 'avg_rad': 4.328436715534132}
 
-BAND_MEANS = {'BLUE': 0.05720699718743952, 'GREEN': 0.09490949383988444, 'RED': 0.11647556706520566, 'NIR': 0.25043694995276194, 'SW_IR1': 0.2392968657712096, 'SW_IR2': 0.17881930908670116, 'TEMP': 309.4823962960872, 'avg_rad': 1.8277193893627437}
-BAND_STDS = {'BLUE': 0.02379879403788589, 'GREEN': 0.03264212296594092, 'RED': 0.050468921297598834, 'NIR': 0.04951648377311826, 'SW_IR1': 0.07332469136800321, 'SW_IR2': 0.07090649886221509, 'TEMP': 6.000001012494749, 'avg_rad': 4.328436715534132}
-
-def get_tfrecord_paths(split, bucket=True):
-    split_sizes = SIZES['LSMS-ethiopia-2018']
+def get_tfrecord_paths(country_year, split, bucket=True):
+    # split_sizes = SIZES['LSMS-ethiopia-2018']
+    split_sizes = dc.SIZES[country_year]
     if bucket:
         glob = 'gs://' + BUCKET + '/' + FOLDER + '/' + '*'
         tfrecords = tf.io.gfile.glob(glob)
@@ -30,7 +32,7 @@ def get_tfrecord_paths(split, bucket=True):
         tfrecords = sorted([f for f in os.listdir(LSMS_TFRECORDS_DIR) if not f.startswith('.')])
         random.shuffle(tfrecords)
         for i, file in enumerate(tfrecords):
-            tfrecords[i] = os.path.join(BASE_DIR, 'data/lsms_tfrecords', file)
+            tfrecords[i] = os.path.join(LSMS_TFRECORDS_DIR, file)
 
     tfrecord_paths = []
     if split == 'all':
@@ -47,11 +49,12 @@ def get_tfrecord_paths(split, bucket=True):
 
 
 class Batcher:
-    def __init__(self, image_shape=(224, 224, 3), bucket=True, num_records=None, buffer_size=5000, batch_size=512, repeat=None, shuffle=True, split='all'):
+    def __init__(self, country_year='ethiopia-2018', image_shape=(224, 224, 3), bucket=True, num_records=None, buffer_size=5000, batch_size=512, repeat=None, shuffle=True, split='all'):
+        self.country_year = country_year
         self.image_shape = image_shape
-        self.tfrecords_paths = get_tfrecord_paths(split=split, bucket=bucket)
+        self.tfrecords_paths = get_tfrecord_paths(country_year=country_year, split=split, bucket=bucket)
         self.num_records = num_records
-        self.bands = ['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'avg_rad']
+        self.bands = ['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS']
         # self.bands = ['TEMP']
         self.scalar_keys = ['lat', 'lon', 'consumption']
         self.label = ['consumption']
@@ -124,14 +127,14 @@ class Batcher:
             band = tf.reshape(band, [255, 255])[15:239, 15:239]
             # band = tf.divide(band, 255)
             # Standardize band
-            band = (band - BAND_MEANS[key]) / BAND_STDS[key]
+            band = (band - dc.MEANS_DICT[self.country_year][key]) / dc.STD_DEVS_DICT[self.country_year][key]
             inputs_list.append(band)
 
         stacked = tf.stack(inputs_list, axis=0)
         # Convert from CHW to HWC
         stacked = tf.transpose(stacked, [1, 2, 0])
         # Standardize consumption
-        label = (example.get('consumption') - CONSUMPTION_MEAN) / CONSUMPTION_STD
+        label = (example.get('consumption') - dc.CONSUMPTION_MEANS[self.country_year]) / dc.CONSUMPTION_STD_DEVS[self.country_year]
 
         sample = (stacked, label)
 
