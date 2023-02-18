@@ -71,6 +71,7 @@ def train_model(
     num_classes,
     weights,
     use_custom_top,
+    bands,
     input_shape,
     fl_activation,
     batch_size,
@@ -98,10 +99,10 @@ def train_model(
 
     if dataset == 'imagery':
         train_batcher = batcher.Batcher(
-            image_shape=input_shape, bucket=bucket, batch_size=batch_size, shuffle=False, split="train"
+            bands=bands, image_shape=input_shape, bucket=bucket, batch_size=batch_size, shuffle=False, split="train"
         ).get_dataset()
         val_batcher = batcher.Batcher(
-            image_shape=input_shape, bucket=bucket, batch_size=batch_size, shuffle=False, split="val"
+            bands=bands, image_shape=input_shape, bucket=bucket, batch_size=batch_size, shuffle=False, split="val"
         ).get_dataset()
     elif dataset == 'cifar':
         train_batcher, val_batcher = batcher.Batcher(image_shape=input_shape, bucket=bucket, batch_size=batch_size).create_cifar_dataset_test()

@@ -1,6 +1,7 @@
 import os
 from train_spatial import train_model
 
+
 # Experiment name: 'dataset_model'
 def run_cifar_vgg16():
     trained_model = train_model(
@@ -31,6 +32,7 @@ def run_cifar_vgg16():
         verbose=2,
     )
 
+
 def run_cifar_vgg16_regression():
     trained_model = train_model(
         experiment_name='cifar_sample_vgg_regression',
@@ -60,6 +62,7 @@ def run_cifar_vgg16_regression():
         verbose=2,
     )
 
+
 def run_imagery_vgg16():
     trained_model = train_model(
         experiment_name='imagery_sample_vgg_regression',
@@ -74,7 +77,9 @@ def run_imagery_vgg16():
         num_classes=1,
         weights=None,
         use_custom_top=True,
-        input_shape=(224, 224, 9),
+        # bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP'],
+        bands=['BLUE', 'GREEN', 'RED', 'DELTA_TEMP'],
+        input_shape=(224, 224, 4),
         fl_activation="linear",
         batch_size=64,
         use_l2_regularizer=True,
@@ -88,6 +93,7 @@ def run_imagery_vgg16():
         val_steps=1302,
         verbose=2,
     )
+
 
 def run_local():
     trained_model = train_model(
@@ -103,7 +109,9 @@ def run_local():
         num_classes=1,
         weights=None,
         use_custom_top=True,
-        input_shape=(224, 224, 9),
+        # bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP'],
+        bands=['BLUE', 'GREEN', 'RED'],
+        input_shape=(224, 224, 3),
         fl_activation="linear",
         batch_size=64,
         use_l2_regularizer=True,

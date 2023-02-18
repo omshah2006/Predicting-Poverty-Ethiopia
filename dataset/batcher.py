@@ -7,23 +7,14 @@ import dataset.dataset_constants as dc
 
 random.seed(4)
 
-SIZES = {
-    'LSMS-ethiopia-2018': {'train': 4559, 'val': 1302, 'test': 652, 'all': 6513}
-}
-
-BASE_DIR = ''
-LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/lsms_tfrecords_new/')
+BASE_DIR = '..'
+LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/eth_lsms_tfrecords/')
+# LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/nga_lsms_tfrecords/')
 BUCKET = 'ppt-central-bucket'
 FOLDER = 'lsms_tfrecords_new'
 
-# CONSUMPTION_MEAN = 4.64419991542738
-# CONSUMPTION_STD = 4.717155116197405
-#
-# BAND_MEANS = {'BLUE': 0.05720699718743952, 'GREEN': 0.09490949383988444, 'RED': 0.11647556706520566, 'NIR': 0.25043694995276194, 'SW_IR1': 0.2392968657712096, 'SW_IR2': 0.17881930908670116, 'TEMP': 309.4823962960872, 'avg_rad': 1.8277193893627437}
-# BAND_STDS = {'BLUE': 0.02379879403788589, 'GREEN': 0.03264212296594092, 'RED': 0.050468921297598834, 'NIR': 0.04951648377311826, 'SW_IR1': 0.07332469136800321, 'SW_IR2': 0.07090649886221509, 'TEMP': 6.000001012494749, 'avg_rad': 4.328436715534132}
 
 def get_tfrecord_paths(country_year, split, bucket=True):
-    # split_sizes = SIZES['LSMS-ethiopia-2018']
     split_sizes = dc.SIZES[country_year]
     if bucket:
         glob = 'gs://' + BUCKET + '/' + FOLDER + '/' + '*'
@@ -36,7 +27,7 @@ def get_tfrecord_paths(country_year, split, bucket=True):
 
     tfrecord_paths = []
     if split == 'all':
-        tfrecord_paths = tfrecords
+        tfrecord_paths = tfrecords[:split_sizes['all']]
     else:
         if split == 'train':
             tfrecord_paths = tfrecords[0:split_sizes['train']]
@@ -49,13 +40,12 @@ def get_tfrecord_paths(country_year, split, bucket=True):
 
 
 class Batcher:
-    def __init__(self, country_year='ethiopia-2018', image_shape=(224, 224, 3), bucket=True, num_records=None, buffer_size=5000, batch_size=512, repeat=None, shuffle=True, split='all'):
+    def __init__(self, bands, country_year='ethiopia-2018', image_shape=(224, 224, 3), bucket=True, num_records=None, buffer_size=5000, batch_size=512, repeat=None, shuffle=True, split='all'):
         self.country_year = country_year
+        self.bands = bands
         self.image_shape = image_shape
         self.tfrecords_paths = get_tfrecord_paths(country_year=country_year, split=split, bucket=bucket)
         self.num_records = num_records
-        self.bands = ['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP']
-        # self.bands = ['TEMP']
         self.scalar_keys = ['lat', 'lon', 'consumption']
         self.label = ['consumption']
         self.features = self.bands + self.scalar_keys + self.label
