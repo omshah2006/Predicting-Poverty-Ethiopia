@@ -145,6 +145,18 @@ def add_deltatemp_band(img):
     return img
 
 
+def add_pollution_band(img):
+    cop5p_col = (
+        ee.ImageCollection('COPERNICUS/S5P/OFFL/L3_CO')
+        .filterDate("2018-01-01", "2018-12-31")
+        .median()
+    )
+
+    img = img.addBands(cop5p_col.select('CO_column_number_density').rename("CO"))
+
+    return img
+
+
 def add_latlon_band(img):
     latlon_img = ee.Image.pixelLonLat().select(
         ["longitude", "latitude"], ["LON", "LAT"]
