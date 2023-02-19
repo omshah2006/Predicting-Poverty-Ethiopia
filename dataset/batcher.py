@@ -10,6 +10,9 @@ random.seed(4)
 BASE_DIR = '..'
 LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/eth_lsms_tfrecords/')
 # LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/nga_lsms_tfrecords/')
+# LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/mwi_lsms_tfrecords/')
+# LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/pollution_lsms_tfrecords/')
+
 BUCKET = 'ppt-central-bucket'
 FOLDER = 'lsms_tfrecords_new'
 
@@ -35,6 +38,8 @@ def get_tfrecord_paths(country_year, split, bucket=True):
             tfrecord_paths = tfrecords[split_sizes['train']:split_sizes['train'] + split_sizes['val']]
         elif split == 'test':
             tfrecord_paths = tfrecords[-split_sizes['test']:]
+        elif split == 'custom':
+            tfrecord_paths = tfrecords[-split_sizes['custom']:]
 
     return tfrecord_paths
 
