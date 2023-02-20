@@ -159,7 +159,7 @@ def train_model(
         )
 
     def lr_scheduler(epoch):
-        return lr_rate * (0.5 ** (epoch // 30))
+        return lr_rate * (0.5 ** (epoch // 5))
 
     reduce_lr = tf.keras.callbacks.LearningRateScheduler(lr_scheduler)
 
