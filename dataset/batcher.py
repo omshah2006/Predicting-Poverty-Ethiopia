@@ -7,12 +7,6 @@ import dataset.dataset_constants as dc
 
 random.seed(4)
 
-BASE_DIR = '..'
-LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/eth_lsms_tfrecords/')
-# LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/nga_lsms_tfrecords/')
-# LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/mwi_lsms_tfrecords/')
-# LSMS_TFRECORDS_DIR = os.path.join(BASE_DIR, 'data/pollution_lsms_tfrecords/')
-
 BUCKET = 'ppt-central-bucket'
 FOLDER = 'lsms_tfrecords_new'
 
@@ -47,6 +41,14 @@ def get_tfrecord_paths(country_year, split, bucket=True):
 class Batcher:
     def __init__(self, bands, country_year='ethiopia-2018', image_shape=(224, 224, 3), bucket=True, num_records=None, buffer_size=5000, batch_size=512, repeat=None, shuffle=True, split='all'):
         self.country_year = country_year
+        self.LSMS_TFRECORDS_DIRS = {
+            'ethiopia-2018': '../data/eth_lsms_tfrecords',
+            'nigeria-2018': '../data/nga_lsms_tfrecords',
+            'malawi-2016': '../data/mwi_lsms_tfrecords',
+            'pollution-2018': '../data/pollution_lsms_tfrecords'
+        }
+        global LSMS_TFRECORDS_DIR
+        LSMS_TFRECORDS_DIR = self.LSMS_TFRECORDS_DIRS[country_year]
         self.bands = bands
         self.image_shape = image_shape
         self.tfrecords_paths = get_tfrecord_paths(country_year=country_year, split=split, bucket=bucket)
