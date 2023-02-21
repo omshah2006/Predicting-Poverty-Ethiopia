@@ -126,6 +126,43 @@ def run_local():
         verbose=2,
     )
 
+def run_grid_search():
+    lrs = [1e-1, 1e-2, 1e-3, 1e-4]
+    epochs = [10, 50, 100, 200]
+
+    for e in epochs:
+        for l in lrs:
+            trained_model = train_model(
+                experiment_name='imagery_sample_cnn_regression' + str(e) + '_' + str(l),
+                platform="cloud",
+                strategy="tpu",
+                model_name="sample_cnn",
+                dataset="imagery",
+                optimizer="adam",
+                lr_rate=l,
+                momentum=0.9,
+                weight_decay=1e-4,
+                num_classes=1,
+                weights=None,
+                use_custom_top=True,
+                # bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO],
+                bands=['VIIRS'],
+                input_shape=(224, 224, 1),
+                fl_activation="linear",
+                batch_size=64,
+                use_l2_regularizer=True,
+                batch_norm_decay=0.9,
+                batch_norm_epsilon=1e-5,
+                loss_func="MeanSquaredError",
+                metrics=["RootMeanSquaredError"],
+                steps_per_execution=32,
+                num_epochs=e,
+                train_steps=int(4559 / 128),
+                val_steps=1302,
+                verbose=2,
+            )
+
+
 
 if __name__ == '__main__':
     # Export TPU_NAME before run
@@ -133,4 +170,4 @@ if __name__ == '__main__':
     os.system(export_tpu_name)
 
     # Run experiment
-    run_imagery_vgg16()
+    run_grid_search()
