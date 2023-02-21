@@ -175,7 +175,7 @@ def train_model(
         verbose=verbose,
     )
 
-    create_metrics_plots(platform=platform, history=history, fig_name=experiment_name)
+    # create_metrics_plots(platform=platform, history=history, fig_name=experiment_name)
 
     # Save model
     filename = experiment_name + '.h5'
