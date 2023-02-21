@@ -65,7 +65,7 @@ def run_cifar_vgg16_regression():
 
 def run_imagery_vgg16():
     trained_model = train_model(
-        experiment_name='imagery_sample_vgg_regression',
+        experiment_name='imagery_sample_cnn_regression',
         platform="cloud",
         strategy="tpu",
         model_name="sample_cnn",
@@ -88,7 +88,7 @@ def run_imagery_vgg16():
         loss_func="MeanSquaredError",
         metrics=["RootMeanSquaredError"],
         steps_per_execution=32,
-        num_epochs=10,
+        num_epochs=50,
         train_steps=int(4559 / 128),
         val_steps=1302,
         verbose=2,
