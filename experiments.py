@@ -71,7 +71,7 @@ def run_imagery_vgg16():
         model_name="sample_cnn",
         dataset="imagery",
         optimizer="adam",
-        lr_rate=1e-3,
+        lr_rate=1e-4,
         momentum=0.9,
         weight_decay=1e-4,
         num_classes=1,
@@ -170,4 +170,4 @@ if __name__ == '__main__':
     os.system(export_tpu_name)
 
     # Run experiment
-    run_grid_search()
+    run_imagery_vgg16()
