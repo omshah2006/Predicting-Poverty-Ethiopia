@@ -8,7 +8,7 @@ import dataset.dataset_constants as dc
 random.seed(4)
 
 BUCKET = 'ppt-central-bucket'
-FOLDER = 'lsms_tfrecords_new'
+FOLDER = 'eth_lsms_tfrecords'
 
 
 def get_tfrecord_paths(country_year, split, bucket=True):
