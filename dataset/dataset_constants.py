@@ -1,7 +1,7 @@
 SIZES = {
     'ethiopia-2018': {'train': 4559, 'val': 1302, 'test': 652, 'all': 6513, 'custom': 652},
-    'nigeria-2018': {'train': 2458, 'val': 702, 'test': 351, 'all': 3510, 'custom': 500},
-    'malawi-2016': {'train': 6734, 'val': 1924, 'test': 963, 'all': 9621, 'custom': 500},
+    'nigeria-2018': {'train': 2458, 'val': 702, 'test': 351, 'all': 3510, 'custom': 652},
+    'malawi-2016': {'train': 6734, 'val': 1924, 'test': 963, 'all': 9621, 'custom': 652},
     'pollution-2018': {'all': 2785, 'custom': 500}
 }
 

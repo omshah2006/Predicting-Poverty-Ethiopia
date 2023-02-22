@@ -32,10 +32,17 @@ def sample_cnn(num_classes, input_shape, fl_activation):
     model.add(layers.Conv2D(filters=256, kernel_size=(3, 3), padding='same', kernel_initializer='he_uniform', activation='gelu'))
     model.add(layers.BatchNormalization())
     model.add(layers.MaxPooling2D())
+    model.add(layers.Dropout(0.4))
+
+    model.add(layers.Conv2D(filters=512, kernel_size=(3, 3), padding='same', kernel_initializer='he_uniform', activation='gelu'))
+    model.add(layers.BatchNormalization())
+    model.add(layers.Conv2D(filters=512, kernel_size=(3, 3), padding='same', kernel_initializer='he_uniform', activation='gelu'))
+    model.add(layers.BatchNormalization())
+    model.add(layers.MaxPooling2D())
     model.add(layers.Dropout(0.45))
 
     model.add(layers.Flatten())
-    model.add(layers.Dense(units=256, kernel_initializer='he_uniform', activation='gelu'))
+    model.add(layers.Dense(units=512, kernel_initializer='he_uniform', activation='gelu'))
     model.add(layers.Dropout(0.5))
     model.add(layers.Dense(units=num_classes, kernel_initializer='he_uniform', activation=fl_activation))
 
