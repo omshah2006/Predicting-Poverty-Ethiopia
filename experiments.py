@@ -78,7 +78,7 @@ def run_imagery_vgg16():
         weights=None,
         use_custom_top=True,
         # bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO],
-        bands=['VIIRS'],
+        bands=['CO'],
         input_shape=(224, 224, 1),
         fl_activation="linear",
         batch_size=64,
