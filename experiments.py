@@ -77,9 +77,9 @@ def run_imagery_vgg16():
         num_classes=1,
         weights=None,
         use_custom_top=True,
-        bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP'],
+        bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS'],
         # bands=['CO'],
-        input_shape=(224, 224, 9),
+        input_shape=(224, 224, 8),
         fl_activation="linear",
         batch_size=64,
         use_l2_regularizer=True,
@@ -170,4 +170,4 @@ if __name__ == '__main__':
     os.system(export_tpu_name)
 
     # Run experiment
-    run_grid_search()
+    run_imagery_vgg16()
