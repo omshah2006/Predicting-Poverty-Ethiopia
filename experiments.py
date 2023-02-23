@@ -128,15 +128,15 @@ def run_local():
 
 def run_grid_search():
     lrs = [1e-1, 1e-2, 1e-3, 1e-4]
-    epochs = [10, 50, 100, 200]
+    models = ['sample_cnn', 'deep_sample_cnn']
 
-    for e in epochs:
+    for m in models:
         for l in lrs:
             trained_model = train_model(
-                experiment_name='imagery_sample_cnn_regression' + str(e) + '_' + str(l),
+                experiment_name='imagery_' + m + '_regression' + '_' + str(l),
                 platform="cloud",
                 strategy="tpu",
-                model_name="sample_cnn",
+                model_name=m,
                 dataset="imagery",
                 optimizer="adam",
                 lr_rate=l,
@@ -146,8 +146,8 @@ def run_grid_search():
                 weights=None,
                 use_custom_top=True,
                 # bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO],
-                bands=['VIIRS'],
-                input_shape=(224, 224, 1),
+                bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
+                input_shape=(224, 224, 10),
                 fl_activation="linear",
                 batch_size=64,
                 use_l2_regularizer=True,
@@ -156,7 +156,7 @@ def run_grid_search():
                 loss_func="MeanSquaredError",
                 metrics=["RootMeanSquaredError"],
                 steps_per_execution=32,
-                num_epochs=e,
+                num_epochs=100,
                 train_steps=int(4559 / 128),
                 val_steps=1302,
                 verbose=2,

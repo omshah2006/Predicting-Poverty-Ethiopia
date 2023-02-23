@@ -144,6 +144,8 @@ def train_model(
             )
         elif model_name == "sample_cnn":
             model = sample_cnn.sample_cnn(num_classes, input_shape, fl_activation)
+        elif model_name == "deep_sample_cnn":
+            model = sample_cnn.deep_sample_cnn(num_classes, input_shape, fl_activation)
         elif model_name == "sample_vgg":
             model = sample_cnn.sample_vgg(num_classes, input_shape, fl_activation)
         else:
