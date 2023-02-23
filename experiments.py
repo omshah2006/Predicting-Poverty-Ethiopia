@@ -128,7 +128,7 @@ def run_local():
 
 def run_grid_search():
     lrs = [1e-1, 1e-2, 1e-3, 1e-4]
-    models = ['sample_vgg', 'sample_cnn', 'deep_sample_cnn']
+    models = ['sample_vgg']
 
     for m in models:
         for l in lrs:
@@ -145,8 +145,8 @@ def run_grid_search():
                 num_classes=1,
                 weights=None,
                 use_custom_top=True,
-                # bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO],
-                bands=['BLUE', 'GREEN', 'RED', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
+                bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
+                # bands=['BLUE', 'GREEN', 'RED', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
                 input_shape=(224, 224, 7),
                 fl_activation="linear",
                 batch_size=64,
@@ -170,4 +170,4 @@ if __name__ == '__main__':
     os.system(export_tpu_name)
 
     # Run experiment
-    run_imagery_vgg16()
+    run_grid_search()
