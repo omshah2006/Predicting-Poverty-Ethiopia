@@ -170,4 +170,4 @@ if __name__ == '__main__':
     os.system(export_tpu_name)
 
     # Run experiment
-    run_imagery_vgg16()
+    run_grid_search()
