@@ -88,7 +88,7 @@ def run_imagery_vgg16():
         loss_func="MeanSquaredError",
         metrics=["RootMeanSquaredError"],
         steps_per_execution=32,
-        num_epochs=50,
+        num_epochs=49,
         train_steps=int(4559 / 128),
         val_steps=1302,
         verbose=2,
