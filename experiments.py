@@ -77,9 +77,9 @@ def run_imagery_vgg16():
         num_classes=1,
         weights=None,
         use_custom_top=True,
-        bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
+        bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP'],
         # bands=['CO'],
-        input_shape=(224, 224, 10),
+        input_shape=(224, 224, 9),
         fl_activation="linear",
         batch_size=64,
         use_l2_regularizer=True,
@@ -88,7 +88,7 @@ def run_imagery_vgg16():
         loss_func="MeanSquaredError",
         metrics=["RootMeanSquaredError"],
         steps_per_execution=32,
-        num_epochs=49,
+        num_epochs=50,
         train_steps=int(4559 / 128),
         val_steps=1302,
         verbose=2,
@@ -128,7 +128,7 @@ def run_local():
 
 def run_grid_search():
     lrs = [1e-1, 1e-2, 1e-3, 1e-4]
-    models = ['sample_cnn', 'deep_sample_cnn']
+    models = ['sample_vgg', 'sample_cnn', 'deep_sample_cnn']
 
     for m in models:
         for l in lrs:
@@ -146,8 +146,8 @@ def run_grid_search():
                 weights=None,
                 use_custom_top=True,
                 # bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO],
-                bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
-                input_shape=(224, 224, 10),
+                bands=['BLUE', 'GREEN', 'RED', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
+                input_shape=(224, 224, 7),
                 fl_activation="linear",
                 batch_size=64,
                 use_l2_regularizer=True,
@@ -170,4 +170,4 @@ if __name__ == '__main__':
     os.system(export_tpu_name)
 
     # Run experiment
-    run_grid_search()
+    run_imagery_vgg16()
