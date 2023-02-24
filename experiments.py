@@ -150,7 +150,7 @@ def run_grid_search():
                     use_custom_top=True,
                     # bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
                     bands=['VIIRS'],
-                    input_shape=(224, 224, 10),
+                    input_shape=(224, 224, 1),
                     activation=a,
                     fl_activation="linear",
                     batch_size=b,
