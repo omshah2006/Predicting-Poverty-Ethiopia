@@ -73,6 +73,7 @@ def train_model(
     use_custom_top,
     bands,
     input_shape,
+    activation,
     fl_activation,
     batch_size,
     use_l2_regularizer,
@@ -143,7 +144,7 @@ def train_model(
                 batch_norm_epsilon,
             )
         elif model_name == "sample_cnn":
-            model = sample_cnn.sample_cnn(num_classes, input_shape, fl_activation)
+            model = sample_cnn.sample_cnn(num_classes, activation, input_shape, fl_activation)
         elif model_name == "deep_sample_cnn":
             model = sample_cnn.deep_sample_cnn(num_classes, input_shape, fl_activation)
         elif model_name == "sample_vgg":

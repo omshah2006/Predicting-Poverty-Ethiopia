@@ -3,7 +3,7 @@ import tensorflow as tf
 layers = tf.keras.layers
 
 
-def sample_cnn(num_classes, input_shape, fl_activation):
+def sample_cnn(num_classes, input_shape, activation, fl_activation):
     model = tf.keras.Sequential()
 
     model.add(layers.Conv2D(32, (3, 3), padding='same', kernel_initializer='he_uniform', input_shape=input_shape))

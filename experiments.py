@@ -126,43 +126,45 @@ def run_local():
         verbose=2,
     )
 
+
 def run_grid_search():
+    batch_sizes = [32, 64, 128, 256]
     lrs = [1e-1, 1e-2, 1e-3, 1e-4]
-    models = ['sample_vgg']
+    activations = ['relu', 'gelu', 'tanh']
 
-    for m in models:
+    for b in batch_sizes:
         for l in lrs:
-            trained_model = train_model(
-                experiment_name='imagery_' + m + '_regression' + '_' + str(l),
-                platform="cloud",
-                strategy="tpu",
-                model_name=m,
-                dataset="imagery",
-                optimizer="adam",
-                lr_rate=l,
-                momentum=0.9,
-                weight_decay=1e-4,
-                num_classes=1,
-                weights=None,
-                use_custom_top=True,
-                bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
-                # bands=['BLUE', 'GREEN', 'RED', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
-                input_shape=(224, 224, 10),
-                fl_activation="linear",
-                batch_size=64,
-                use_l2_regularizer=True,
-                batch_norm_decay=0.9,
-                batch_norm_epsilon=1e-5,
-                loss_func="MeanSquaredError",
-                metrics=["RootMeanSquaredError"],
-                steps_per_execution=32,
-                num_epochs=100,
-                train_steps=int(4559 / 128),
-                val_steps=1302,
-                verbose=2,
-            )
-
-
+            for a in activations:
+                trained_model = train_model(
+                    experiment_name='imagery_sample_cnn_regression' + '_' + str(b) + str(l) + a,
+                    platform="cloud",
+                    strategy="tpu",
+                    model_name='sample_cnn',
+                    dataset="imagery",
+                    optimizer="adam",
+                    lr_rate=l,
+                    momentum=0.9,
+                    weight_decay=1e-4,
+                    num_classes=1,
+                    weights=None,
+                    use_custom_top=True,
+                    # bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
+                    bands=['VIIRS'],
+                    input_shape=(224, 224, 10),
+                    activation=a,
+                    fl_activation="linear",
+                    batch_size=b,
+                    use_l2_regularizer=True,
+                    batch_norm_decay=0.9,
+                    batch_norm_epsilon=1e-5,
+                    loss_func="MeanSquaredError",
+                    metrics=["RootMeanSquaredError"],
+                    steps_per_execution=32,
+                    num_epochs=100,
+                    train_steps=int(4559 / 128),
+                    val_steps=1302,
+                    verbose=2,
+                )
 
 if __name__ == '__main__':
     # Export TPU_NAME before run
@@ -170,4 +172,4 @@ if __name__ == '__main__':
     os.system(export_tpu_name)
 
     # Run experiment
-    run_imagery_vgg16()
+    run_grid_search()
