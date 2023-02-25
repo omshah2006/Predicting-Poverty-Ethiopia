@@ -33,7 +33,7 @@ def get_tfrecord_paths(country_year, split, bucket=True):
         elif split == 'test':
             tfrecord_paths = tfrecords[-split_sizes['test']:]
         elif split == 'custom':
-            tfrecord_paths = tfrecords[-split_sizes['custom']:]
+            tfrecord_paths = random.sample(tfrecords, split_sizes['custom'])
 
     return tfrecord_paths
 

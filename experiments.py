@@ -71,24 +71,25 @@ def run_imagery_vgg16():
         model_name="sample_cnn",
         dataset="imagery",
         optimizer="adam",
-        lr_rate=1e-4,
+        lr_rate=1e-3,
         momentum=0.9,
         weight_decay=1e-4,
         num_classes=1,
         weights=None,
         use_custom_top=True,
-        bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS'],
+        bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
         # bands=['CO'],
-        input_shape=(224, 224, 8),
+        input_shape=(224, 224, 10),
+        activation="gelu",
         fl_activation="linear",
-        batch_size=64,
+        batch_size=256,
         use_l2_regularizer=True,
         batch_norm_decay=0.9,
         batch_norm_epsilon=1e-5,
         loss_func="MeanSquaredError",
         metrics=["RootMeanSquaredError"],
         steps_per_execution=32,
-        num_epochs=50,
+        num_epochs=100,
         train_steps=int(4559 / 128),
         val_steps=1302,
         verbose=2,
@@ -172,4 +173,4 @@ if __name__ == '__main__':
     os.system(export_tpu_name)
 
     # Run experiment
-    run_grid_search()
+    run_imagery_vgg16()
