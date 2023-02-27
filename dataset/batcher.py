@@ -131,7 +131,8 @@ class Batcher:
         # Convert from CHW to HWC
         stacked = tf.transpose(stacked, [1, 2, 0])
         # Standardize consumption
-        label = (example.get('consumption') - dc.CONSUMPTION_MEANS[self.country_year]) / dc.CONSUMPTION_STD_DEVS[self.country_year]
+        # label = (example.get('consumption') - dc.CONSUMPTION_MEANS[self.country_year]) / dc.CONSUMPTION_STD_DEVS[self.country_year]
+        label = example.get('consumption')
 
         sample = (stacked, label)
 
