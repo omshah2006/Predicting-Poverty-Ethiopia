@@ -68,7 +68,7 @@ def run_imagery_vgg16():
         experiment_name='imagery_sample_cnn_regression',
         platform="cloud",
         strategy="tpu",
-        model_name="sample_vgg",
+        model_name="sample_cnn",
         dataset="imagery",
         optimizer="adam",
         lr_rate=1e-3,
@@ -77,9 +77,9 @@ def run_imagery_vgg16():
         num_classes=1,
         weights=None,
         use_custom_top=True,
-        bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
-        # bands=['CO'],
-        input_shape=(224, 224, 10),
+        # bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
+        bands=['VIIIRS', 'BLUE'],
+        input_shape=(224, 224, 2),
         activation="gelu",
         fl_activation="linear",
         batch_size=256,
@@ -101,7 +101,7 @@ def run_local():
         experiment_name='imagery_sample_vgg_regression',
         platform="local",
         strategy="mirrored",
-        model_name="sample_vgg",
+        model_name="sample_cnn",
         dataset="imagery",
         optimizer="adam",
         lr_rate=1e-3,
@@ -173,4 +173,4 @@ if __name__ == '__main__':
     os.system(export_tpu_name)
 
     # Run experiment
-    run_grid_search()
+    run_imagery_vgg16()
