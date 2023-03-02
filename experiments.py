@@ -65,7 +65,7 @@ def run_cifar_vgg16_regression():
 
 def run_imagery_vgg16():
     trained_model = train_model(
-        experiment_name='imagery_sample_cnn_regression',
+        experiment_name='imagery_sample_cnn_regression_NL+BLUE+GREEN',
         platform="cloud",
         strategy="tpu",
         model_name="sample_cnn",
@@ -78,8 +78,8 @@ def run_imagery_vgg16():
         weights=None,
         use_custom_top=True,
         # bands=['BLUE', 'GREEN', 'RED', 'NIR', 'SW_IR1', 'SW_IR2', 'TEMP', 'VIIRS', 'DELTA_TEMP', 'CO'],
-        bands=['VIIRS'],
-        input_shape=(224, 224, 1),
+        bands=['VIIRS', 'BLUE', 'GREEN'],
+        input_shape=(224, 224, 3),
         activation="gelu",
         fl_activation="linear",
         batch_size=256,
